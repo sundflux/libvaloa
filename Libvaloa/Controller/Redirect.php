@@ -56,11 +56,15 @@ class Redirect
         $request = Request::getInstance();
         $prepend = '';
 
+        $pos = strpos($url, '://');
         if (!$omitBase) {
-            $prepend = $request->getBaseUri();
+            // Prepend the url only if no protocol defined in the url
+            if($pos == false) {
+                $prepend = $request->getBaseUri() . '/';
+            }
         }
 
-        header('location: '.$prepend.'/'.$url);
+        header('location: ' . $prepend . $url);
         exit;
     }
 
