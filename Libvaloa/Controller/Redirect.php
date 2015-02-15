@@ -59,7 +59,7 @@ class Redirect
         $pos = strpos($url, '://');
         if (!$omitBase) {
             // Prepend the url only if no protocol defined in the url
-            if($pos == false) {
+            if ($pos == false) {
                 $prepend = $request->getBaseUri() . '/';
             }
         }
