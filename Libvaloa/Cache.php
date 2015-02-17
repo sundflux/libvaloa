@@ -198,4 +198,27 @@ class Cache
         return $v;
     }
 
+    public function delete($key)
+    {
+        $search = $key;
+        $keys = $this->connection->getAllKeys();
+
+        if ($search !== false) {
+            foreach ($keys as $index => $key) {
+                if (strpos($key, $search) !== false) {
+                    unset($keys[$index]);
+                } else {
+                    $this->connection->delete($key);
+                }
+            }
+        }
+
+        return $keys;
+    }
+
+    public function _delete($key)
+    {
+        return $this->delete(session_id() . $search);
+    }
+
 }
