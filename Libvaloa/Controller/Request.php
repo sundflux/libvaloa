@@ -210,7 +210,7 @@ class Request
     /*
      * Set protocol
      */
-    public function setProtocol($protocl)
+    public function setProtocol($protocol)
     {
     	$protocols = array(
     		'http',
