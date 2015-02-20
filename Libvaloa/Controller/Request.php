@@ -56,6 +56,7 @@ class Request
     private $controller = false;      // requested controller to load
     private $method = 'index';        // requested method to call from controller
     private $parameters = array();    // parameters for controller
+    private $protocol = 'http';
 
     private $ajax = false;
     private $json = false;
@@ -107,6 +108,14 @@ class Request
 
         // rest are parameters
         $this->parameters = array_map(array($this, 'decodeRouteParam'), $route);
+
+        // Protocol
+        $this->protocol = 'http';
+
+        if (isset($_SERVER['HTTPS'])) {
+            $this->protocol = ($_SERVER['HTTPS']
+                && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+        }
 
         self::$instance = $this;
 
@@ -196,6 +205,27 @@ class Request
         } else {
             $this->parameters = explode('/', $params);
         }
+    }
+
+    /*
+     * Set protocol
+     */
+    public function setProtocol($protocl)
+    {
+    	$protocols = array(
+    		'http',
+    		'https',
+    		'h2-17', // http/2 secure, draft 17
+    		'h2-14', // http/2 secure, draft 14
+    		'h2c-17', // http/2 non-secure, draft 17
+    		'h2c-14' // http/2 non-secure, draft 17
+    	);
+
+    	if (!in_array($protocol, $protocols)) {
+    		$protocol = 'http';
+    	}
+
+    	$this->protocol = $protocol;
     }
 
     /**
@@ -316,15 +346,8 @@ class Request
     */
     public function getBaseUri($noautoindex = false)
     {
-        // Protocol
-        $protocol = 'http';
-        if (isset($_SERVER['HTTPS'])) {
-            $protocol = ($_SERVER['HTTPS']
-                && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
-        }
-
         // Basehref
-        return $protocol.'://'.$_SERVER['HTTP_HOST'].$this->getPath();
+        return $this->protocol.'://'.$_SERVER['HTTP_HOST'].$this->getPath();
     }
 
     /**
