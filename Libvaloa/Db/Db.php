@@ -590,5 +590,9 @@ class ResultSet implements Iterator
     {
         return isset($this->rows[$this->index]);
     }
+    public function rowCount()
+    {
+        return $this->stmt->rowCount();
+    }
 
 }
