@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Joni Halme <jontsa@amigaone.cc>
+ * Joni Halme <jontsa@amigaone.cc>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2006 Joni Halme <jontsa@amigaone.cc>
@@ -30,7 +31,7 @@
  * IN THE SOFTWARE.
  */
 
- /**
+/**
  * Controller Request object.
  *
  * $uri must always contain:
@@ -40,16 +41,12 @@
  * If method is not found, it is appended to parameters and no method is called automatically.
  * If controller is not found, it is appended to parameters and default controller is opened
  * Parameters can be used as variable1/value1/variable2/value2 or value1/value2/value3 etc
- *
- * @package       Kernel
- * @subpackage    Controller
  */
 
 namespace Libvaloa\Controller;
 
 class Request
 {
-
     private static $instance = false;
 
     private $baseuri = array();       // host (with http[s]:// prefix) and path
@@ -64,7 +61,7 @@ class Request
     public function __construct()
     {
         $tmp = str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']);
-        $uri = $_SERVER['HTTP_HOST'] . $tmp . str_replace(str_replace('index.php', '', $tmp), '/', $_SERVER['REQUEST_URI']);
+        $uri = $_SERVER['HTTP_HOST'].$tmp.str_replace(str_replace('index.php', '', $tmp), '/', $_SERVER['REQUEST_URI']);
 
         // http/https autodetect
         if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
@@ -80,7 +77,7 @@ class Request
         // Route when rewrite..
         if (strpos($uri, 'index.php') === false) {
             $uri = str_replace($_SERVER['HTTP_HOST'],
-                $_SERVER['HTTP_HOST'] . 'index.php', $uri);
+                $_SERVER['HTTP_HOST'].'index.php', $uri);
         }
 
         list($host, $route) = explode('index.php', $uri, 2);
@@ -120,11 +117,11 @@ class Request
         self::$instance = $this;
 
         // ajax autodetect
-        if(isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
             && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             $this->ajax = true;
 
-            if(isset($_SERVER['HTTP_ACCEPT']) && in_array('application/json',
+            if (isset($_SERVER['HTTP_ACCEPT']) && in_array('application/json',
                 explode(',', $_SERVER['HTTP_ACCEPT']), true)) {
                 $this->json = true;
             }
@@ -132,25 +129,25 @@ class Request
     }
 
     /**
-    * Returns Request instance.
-    *
-    * @return Request
-    */
+     * Returns Request instance.
+     *
+     * @return Request
+     */
     public static function getInstance()
     {
         if (self::$instance) {
             return self::$instance;
         }
 
-        return new Request;
+        return new Request();
     }
 
     /**
-    * This method is called from controller if selected method does not exist.
-    * We assume that second parameter is not meant as method but as a parameter.
-    *
-    * @note This method should never ever be called after shiftController().
-    */
+     * This method is called from controller if selected method does not exist.
+     * We assume that second parameter is not meant as method but as a parameter.
+     *
+     * @note This method should never ever be called after shiftController().
+     */
     public function shiftMethod()
     {
         if ($this->method && $this->method != 'index') {
@@ -161,10 +158,10 @@ class Request
     }
 
     /**
-    * This method is called from controller if selected controller does not exist.
-    * We assume that first parameter is not meant as controller name but as
-    * a parameter.
-    */
+     * This method is called from controller if selected controller does not exist.
+     * We assume that first parameter is not meant as controller name but as
+     * a parameter.
+     */
     public function shiftController()
     {
         if ($this->controller) {
@@ -180,24 +177,24 @@ class Request
     }
 
     /**
-    * Sets controller to load.
-    */
+     * Sets controller to load.
+     */
     public function setController($controller)
     {
         $this->controller = ucfirst($controller);
     }
 
     /**
-    * Sets method to call from controller
-    */
+     * Sets method to call from controller.
+     */
     public function setMethod($method)
     {
         $this->method = $method;
     }
 
     /**
-    * Sets parameters for controller.
-    */
+     * Sets parameters for controller.
+     */
     public function setParams($params)
     {
         if (is_array($params)) {
@@ -212,29 +209,30 @@ class Request
      */
     public function setProtocol($protocol)
     {
-    	$protocols = array(
-    		'http',
-    		'https',
-    		'h2-17', // http/2 secure, draft 17
-    		'h2-14', // http/2 secure, draft 14
-    		'h2c-17', // http/2 non-secure, draft 17
-    		'h2c-14' // http/2 non-secure, draft 17
-    	);
+        $protocols = array(
+            'http',
+            'https',
+            'h2-17', // http/2 secure, draft 17
+            'h2-14', // http/2 secure, draft 14
+            'h2c-17', // http/2 non-secure, draft 17
+            'h2c-14', // http/2 non-secure, draft 17
+        );
 
-    	if (!in_array($protocol, $protocols)) {
-    		$protocol = 'http';
-    	}
+        if (!in_array($protocol, $protocols)) {
+            $protocol = 'http';
+        }
 
-    	$this->protocol = $protocol;
+        $this->protocol = $protocol;
     }
 
     /**
-    * Returns the parameters and their values from current request.
-    *
-    * @param bool $string If true, return value is request string,
-    *        otherwise its an array
-    * @return mixed
-    */
+     * Returns the parameters and their values from current request.
+     *
+     * @param bool $string If true, return value is request string,
+     *                     otherwise its an array
+     *
+     * @return mixed
+     */
     public function getParams($string = false)
     {
         if (!$string) {
@@ -245,8 +243,8 @@ class Request
     }
 
     /**
-    * Returns name of requested controller.
-    */
+     * Returns name of requested controller.
+     */
     public function getController($full = true)
     {
         if (!$full) {
@@ -275,16 +273,16 @@ class Request
     }
 
     /**
-    * Returns name of requested method.
-    */
+     * Returns name of requested method.
+     */
     public function getMethod()
     {
         return $this->method;
     }
 
     /**
-    * Returns a single parameter by its position in parameters or by its key.
-    */
+     * Returns a single parameter by its position in parameters or by its key.
+     */
     public function getParam($k)
     {
         if (is_int($k)) {
@@ -300,21 +298,21 @@ class Request
     }
 
     /**
-    * Returns the host-part of the current request IF available.
-    *
-    * @return string
-    */
+     * Returns the host-part of the current request IF available.
+     *
+     * @return string
+     */
     public function getHost()
     {
         return $this->baseuri['host'];
     }
 
     /**
-    * Returns the base path.
-    * The path does not contain index.php
-    *
-    * @return string
-    */
+     * Returns the base path.
+     * The path does not contain index.php.
+     *
+     * @return string
+     */
     public function getPath()
     {
         return rtrim(dirname(substr($_SERVER['SCRIPT_FILENAME'],
@@ -322,12 +320,12 @@ class Request
     }
 
     /**
-    * Returns the full route to the current request without the leading /.
-    * For example "my_controller/method/param1/value1".
-    * Parameters in route are encoded
-    *
-    * @return string
-    */
+     * Returns the full route to the current request without the leading /.
+     * For example "my_controller/method/param1/value1".
+     * Parameters in route are encoded.
+     *
+     * @return string
+     */
     public function getCurrentRoute()
     {
         $params = array_map('self::encodeRouteParam', $this->parameters);
@@ -338,12 +336,13 @@ class Request
     }
 
     /**
-    * Returns host and path to the website with http[s]:// prefix.
-    *
-    * @param bool $noautoindex If true, index.php will not be
-    *        automatically appended to url.
-    * @return string
-    */
+     * Returns host and path to the website with http[s]:// prefix.
+     *
+     * @param bool $noautoindex If true, index.php will not be
+     *                          automatically appended to url.
+     *
+     * @return string
+     */
     public function getBaseUri($noautoindex = false)
     {
         // Basehref
@@ -351,12 +350,12 @@ class Request
     }
 
     /**
-    * Returns full URI of the current website with controller,
-    * method and controller parameters.
-    */
+     * Returns full URI of the current website with controller,
+     * method and controller parameters.
+     */
     public function getUri()
     {
-        return $this->getBaseUri() . '/' . $this->getCurrentRoute();
+        return $this->getBaseUri().'/'.$this->getCurrentRoute();
     }
 
     public function isAjax($val = null)
@@ -382,7 +381,6 @@ class Request
         if (substr($val, 0, 5) === '$enc$') {
             return base64_decode(str_replace('.', '/',
                 urldecode(substr($val, 5))));
-
         } else {
             return urldecode($val);
         }
@@ -396,5 +394,4 @@ class Request
             return urlencode($val);
         }
     }
-
 }

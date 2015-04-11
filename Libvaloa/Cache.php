@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2014 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -35,22 +36,21 @@ namespace Libvaloa;
 use Memcached;
 
 /**
- * Memcached caching class
+ * Memcached caching class.
  */
 class Cache
 {
-
     /**
-     * Memcached server settings
+     * Memcached server settings.
      *
      * @var type
      */
     public $properties = array(
         'host'         => 'localhost',
         'port'         => 11211,
-        'expires'      => 300, // 5 minute cache by default
-        'defaultPrefix'=> 'Libvaloa_Cache',
-        'empty'        => '__CACHE_NULL__'
+        'expires'      => 900, // 15 minute cache by default
+        'defaultPrefix' => 'Libvaloa_Cache',
+        'empty'        => '__CACHE_NULL__',
     );
 
     private $connection;
@@ -65,12 +65,13 @@ class Cache
     }
 
     /**
-     * Open connection to memcached server
+     * Open connection to memcached server.
      */
     public function openConnection()
     {
         $this->connection = new Memcached($this->connectionName);
         $this->connection->setOption(Memcached::OPT_COMPRESSION, false);
+
         $servers = $this->connection->getServerList();
 
         // Check if the server is already in the memcached pool
@@ -85,10 +86,11 @@ class Cache
 
     /**
      * Set key/value pair to global memcached caching scope.
-     * Alias for set()
+     * Alias for set().
      *
-     * @param  type $key
-     * @param  type $value
+     * @param type $key
+     * @param type $value
+     *
      * @return bool
      */
     public function __set($key, $value)
@@ -98,9 +100,10 @@ class Cache
 
     /**
      * Get global cache value by key.
-     * Alias for get()
+     * Alias for get().
      *
-     * @param  type  $key
+     * @param type $key
+     *
      * @return mixed
      */
     public function __get($key)
@@ -111,8 +114,9 @@ class Cache
     /**
      * Set key/value pair to global memcached caching scope.
      *
-     * @param  type $key
-     * @param  type $value
+     * @param type $key
+     * @param type $value
+     *
      * @return bool
      */
     public function set($key, $value)
@@ -137,7 +141,8 @@ class Cache
     /**
      * Get global cache value by key.
      *
-     * @param  type  $key
+     * @param type $key
+     *
      * @return mixed
      */
     public function get($key)
@@ -158,9 +163,10 @@ class Cache
     /**
      * Set session-specific key/value pair to memcached.
      *
-     * @param  type    $key
-     * @param  type    $value
-     * @return boolean
+     * @param type $key
+     * @param type $value
+     *
+     * @return bool
      */
     public function _set($key, $value)
     {
@@ -168,7 +174,7 @@ class Cache
             $this->openConnection();
         }
 
-        $v = $this->connection->add(session_id() . $key, $value, $this->properties['expires']);
+        $v = $this->connection->add(session_id().$key, $value, $this->properties['expires']);
 
         if (!$v || $v === null) {
             return false;
@@ -180,7 +186,8 @@ class Cache
     /**
      * Get session-specific cache value by key.
      *
-     * @param  type  $key
+     * @param type $key
+     *
      * @return mixed
      */
     public function _get($key)
@@ -189,7 +196,7 @@ class Cache
             $this->openConnection();
         }
 
-        $v = $this->connection->get(session_id() . $key);
+        $v = $this->connection->get(session_id().$key);
 
         if (!$v || $v === null) {
             return false;
@@ -218,7 +225,6 @@ class Cache
 
     public function _delete($key)
     {
-        return $this->delete(session_id() . $search);
+        return $this->delete(session_id().$search);
     }
-
 }

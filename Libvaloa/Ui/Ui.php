@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2013 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -34,7 +35,6 @@ namespace Libvaloa\Ui;
 
 interface Ui
 {
-
     public function __construct($from);
     public function includePath($path);
     public function getIncludePaths();
@@ -53,5 +53,4 @@ interface Ui
     public function setPreProcessedTemplateDom($v);
     public function parse($v);
     public function __toString();
-
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2004,2014 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -34,9 +35,6 @@
  * Adds XSLT features to XML.
  *
  * Allows creating any kind of (text) output using XML and XSL styles.
- *
- * @package    Kernel
- * @subpackage Xml
  */
 
 namespace Libvaloa\Xml;
@@ -47,9 +45,8 @@ use XsltProcessor;
 
 class Xsl
 {
-
     public $properties = array(
-        'enablePhpFunctions' => 1
+        'enablePhpFunctions' => 1,
     );
 
     /**
@@ -64,13 +61,13 @@ class Xsl
 
     public function __construct()
     {
-
     }
 
     /**
      * Adds XSL file to list of files to include.
      *
      * @access public
+     *
      * @param mixed $files   Filename with path or array of files
      * @param bool  $prepend If true, file(s) are put to the top of xsl file stack
      */
@@ -93,14 +90,14 @@ class Xsl
      * Preprocess (merge) all templates as a single DOM node.
      * This result can then be fetched with getPreProcessedTemplateDom()
      * for possible modification, and set back to the UI with
-     * setPreProcessedTemplateDom()
+     * setPreProcessedTemplateDom().
      *
      * @throws RuntimeException
      */
     public function preProcessTemplate()
     {
         foreach ($this->xslfiles as $primary => $v) {
-            $templateDom = new DomDocument;
+            $templateDom = new DomDocument();
             $templateDom->load($v);
 
             if ($templateDom->firstChild->nodeName === 'xsl:stylesheet') {
@@ -111,7 +108,7 @@ class Xsl
         }
 
         if (!isset($primary)) {
-            throw new RuntimeException("No valid XML stylesheets were found for XSLT parser.");
+            throw new RuntimeException('No valid XML stylesheets were found for XSLT parser.');
         }
 
         foreach ($this->xslfiles as $k => $v) {
@@ -128,7 +125,7 @@ class Xsl
     }
 
     /**
-     * Return the template as DomDocument
+     * Return the template as DomDocument.
      *
      * @return DomDocument
      */
@@ -157,8 +154,11 @@ class Xsl
      *
      * @todo   Allow changing of encoding
      * @access public
-     * @param  DomDocument $xmldom XML-data as DomDocument
-     * @return string      Parsed data as string
+     *
+     * @param DomDocument $xmldom XML-data as DomDocument
+     *
+     * @return string Parsed data as string
+     *
      * @uses   DomDocument
      * @uses   XsltProcessor
      */
@@ -168,7 +168,7 @@ class Xsl
             $this->preProcessTemplate();
         }
 
-        $proc = new XsltProcessor;
+        $proc = new XsltProcessor();
         $proc->importStylesheet($this->getPreProcessedTemplateDom());
 
         // Allow PHP functions from XSL templates
@@ -183,6 +183,7 @@ class Xsl
      * self to string conversion.
      *
      * @access public
+     *
      * @return string Parsed data as string
      */
     public function __toString()
@@ -193,5 +194,4 @@ class Xsl
             return '';
         }
     }
-
 }

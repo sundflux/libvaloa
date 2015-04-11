@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Joni Halme <jontsa@amigaone.cc>
+ * Joni Halme <jontsa@amigaone.cc>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2008 Joni Halme <jontsa@amigaone.cc>
@@ -30,22 +31,20 @@
  * IN THE SOFTWARE.
  */
 
-Namespace Libvaloa\Auth;
+namespace Libvaloa\Auth;
 
-class Auth_Exception extends \Libvaloa\Common\Exception
+class Exception extends \Libvaloa\Common\Exception
 {
-
     public static $properties = array(
-        'ui' => 'Libvaloa\Ui\Xml'
+        'ui' => 'Libvaloa\Ui\Xml',
     );
 
     public function denyAccess()
     {
         $tmp = self::$properties['ui'];
-        $ui = new $tmp;
+        $ui = new $tmp();
         $ui->addError($this->getMessage());
-        $auth = new Auth;
+        $auth = new Auth();
         $auth->logout();
     }
-
 }

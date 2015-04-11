@@ -1,10 +1,11 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
- * Copyright (C) 2004 Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Copyright (C) 2004, 2015 Tarmo Alexander Sundström <ta@sundstrom.im>
  *
  * All Rights Reserved.
  *
@@ -34,7 +35,6 @@ namespace Libvaloa;
 
 class Benchmark
 {
-
     private $startTime;
     private $startMem;
 
@@ -43,14 +43,14 @@ class Benchmark
      */
     public function __construct()
     {
-        $this->startTime = microtime(true);
-        $this->startMem = memory_get_usage();
+        $this->startCounter();
     }
 
     /**
      * Starts counter by storing current microtime to $startTime variable.
      *
      * @access public
+     *
      * @return float Current microtime
      */
     public function startCounter()
@@ -62,7 +62,7 @@ class Benchmark
     }
 
     /**
-     * Returns current memory usage
+     * Returns current memory usage.
      *
      * @return mixed
      */
@@ -76,12 +76,14 @@ class Benchmark
      * time libvaloa environment was started.
      *
      * @access public
-     * @param  integer $decimals number of decimals in benchmark time
-     * @return float   Benchmark time
+     *
+     * @param int $decimals number of decimals in benchmark time
+     *
+     * @return float Benchmark time
      */
     public static function benchScript($decimals = 3)
     {
-        return sprintf("%0.".(int) $decimals."f",
+        return sprintf('%0.'.(int) $decimals.'f',
             (microtime(true) - \Webvaloa\Webvaloa::$time));
     }
 
@@ -89,13 +91,14 @@ class Benchmark
      * Stops counter and returns benchmark in seconds.
      *
      * @access public
-     * @param  integer $decimals number of decimals in benchmark time
-     * @return float   Benchmark time
+     *
+     * @param int $decimals number of decimals in benchmark time
+     *
+     * @return float Benchmark time
      */
     public function stop($decimals = 3)
     {
-        return sprintf("%0.".(int) $decimals."f",
+        return sprintf('%0.'.(int) $decimals.'f',
             (microtime(true) - $this->startTime));
     }
-
 }

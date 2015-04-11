@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2014 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -31,13 +32,12 @@
 
 /**
  * Based on excellent dom debugging techniques discussed here:
- * http://stackoverflow.com/questions/684227/debug-a-domdocument-object-in-php
+ * http://stackoverflow.com/questions/684227/debug-a-domdocument-object-in-php.
  */
 
 namespace Libvaloa\Xml;
 
 use Libvaloa\Debug;
-
 use RecursiveIterator;
 use RecursiveTreeIterator;
 use DOMNode;
@@ -93,7 +93,6 @@ abstract class IteratorDecoratorStub implements OuterIterator
     {
         $this->iterator->next();
     }
-
 }
 
 abstract class RecursiveIteratorDecoratorStub extends IteratorDecoratorStub implements RecursiveIterator
@@ -112,7 +111,6 @@ abstract class RecursiveIteratorDecoratorStub extends IteratorDecoratorStub impl
     {
         return new static($this->getInnerIterator()->getChildren());
     }
-
 }
 
 class DOMRecursiveDecoratorStringAsCurrent extends RecursiveIteratorDecoratorStub
@@ -133,7 +131,6 @@ class DOMRecursiveDecoratorStringAsCurrent extends RecursiveIteratorDecoratorStu
                 return sprintf('(%d) %s', $nodeType, $node->nodeValue);
         }
     }
-
 }
 
 class DOMIterator extends IteratorDecoratorStub
@@ -151,7 +148,6 @@ class DOMIterator extends IteratorDecoratorStub
 
         parent::__construct($nodeOrNodes);
     }
-
 }
 
 class DOMRecursiveIterator extends \Libvaloa\Xml\DOMIterator implements RecursiveIterator
@@ -167,7 +163,6 @@ class DOMRecursiveIterator extends \Libvaloa\Xml\DOMIterator implements Recursiv
 
         return new self($children);
     }
-
 }
 
 class DomDebug
@@ -185,18 +180,17 @@ class DomDebug
 
         $output = array();
         foreach ($tree as $v) {
-            $v = trim(str_replace("\n", "", $v));
+            $v = trim(str_replace("\n", '', $v));
 
             $checkEmpty = str_replace('|', '', $v);
             $checkEmpty = str_replace('-', '', $checkEmpty);
             $checkEmpty = str_replace(' ', '', $checkEmpty);
 
             if (!empty($v) && !empty($checkEmpty)) {
-                $output[] = $v . '>';
+                $output[] = $v.'>';
             }
         }
 
         Debug::__print($output);
     }
-
 }

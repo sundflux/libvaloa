@@ -1,4 +1,5 @@
 <?php
+
 /*
  * The Initial Developer of the Original Code is
  * Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -30,11 +31,9 @@
  * IN THE SOFTWARE.
  */
 
- /**
- * Redirecter
+/**
+ * Redirecter.
  *
- * @package       Kernel
- * @subpackage    Controller
  * @uses          Controller_Request
  */
 
@@ -42,7 +41,6 @@ namespace Libvaloa\Controller;
 
 class Redirect
 {
-
     /**
      * Redirect client to the given controller or url.
      * Prepends full base url to the header redirection unless
@@ -60,12 +58,11 @@ class Redirect
         if (!$omitBase) {
             // Prepend the url only if no protocol defined in the url
             if ($pos == false) {
-                $prepend = $request->getBaseUri() . '/';
+                $prepend = $request->getBaseUri().'/';
             }
         }
 
-        header('location: ' . $prepend . $url);
+        header('location: '.$prepend.$url);
         exit;
     }
-
 }

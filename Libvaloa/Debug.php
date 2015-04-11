@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Joni Halme <jontsa@amigaone.cc>
+ * Joni Halme <jontsa@amigaone.cc>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2009 Joni Halme <jontsa@amigaone.cc>
@@ -37,12 +38,11 @@ use Libvaloa\Controller\Request;
 
 class Debug
 {
-
     private static $data = array();
     private static $shutdown = false;
 
     /**
-     * Append debug messages to debug object
+     * Append debug messages to debug object.
      */
     public static function append()
     {
@@ -52,7 +52,7 @@ class Debug
             $value = reset($value);
         }
 
-        $debugobj = new stdClass;
+        $debugobj = new stdClass();
         $debugobj->time = Benchmark::benchScript(5);
         $debugobj->mu = memory_get_usage();
         $debugobj->type = gettype($value);
@@ -65,15 +65,15 @@ class Debug
 
         $backtrace = debug_backtrace();
 
-        $calledFrom = "";
-        if (isset($backtrace[3]["function"])) {
-            $calledFrom = $backtrace[3]["function"];
+        $calledFrom = '';
+        if (isset($backtrace[3]['function'])) {
+            $calledFrom = $backtrace[3]['function'];
         }
 
-        $debugobj->backtrace = "{$backtrace[2]["file"]} line {$backtrace[2]["line"]} (Called from {$calledFrom}())";
+        $debugobj->backtrace = "{$backtrace[2]['file']} line {$backtrace[2]['line']} (Called from {$calledFrom}())";
 
         if (self::$shutdown === false) {
-            register_shutdown_function(array("Libvaloa\Debug", "dump"));
+            register_shutdown_function(array("Libvaloa\Debug", 'dump'));
             self::$shutdown = true;
         }
 
@@ -81,15 +81,15 @@ class Debug
     }
 
     /**
-     * Dump debug messages at shutdown
+     * Dump debug messages at shutdown.
      */
     public static function dump()
     {
         if (class_exists('\\Libvaloa\\Db\\Db')) {
-            self::__print("Executed ".\Libvaloa\Db\Db::$querycount." sql queries");
+            self::__print('Executed '.\Libvaloa\Db\Db::$querycount.' sql queries');
         }
 
-        self::__print("Libvaloa finished");
+        self::__print('Libvaloa finished');
 
         print '<pre id="debug">';
         foreach (self::$data as $v) {
@@ -100,8 +100,7 @@ class Debug
                 $v->type,
                 (in_array(
                     $v->type,
-                    array("array", "object"), true) ? "<code>".$v->data."</code>" : $v->data));
-
+                    array('array', 'object'), true) ? '<code>'.$v->data.'</code>' : $v->data));
         }
         print '</pre>';
 
@@ -109,7 +108,7 @@ class Debug
     }
 
     /**
-     * Prints debug message with backtrace when E_ALL error level is set
+     * Prints debug message with backtrace when E_ALL error level is set.
      *
      * @return type
      */
@@ -120,7 +119,6 @@ class Debug
         }
 
         $a = func_get_args();
-        call_user_func_array(array("\Libvaloa\Debug", "append"), $a);
+        call_user_func_array(array("\Libvaloa\Debug", 'append'), $a);
     }
-
 }

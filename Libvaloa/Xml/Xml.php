@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2004, 2014 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -36,8 +37,6 @@
  * Creates XML data from PHP objects. Objects can contain
  * more objects, arrays, strings etc.
  *
- * @package    Kernel
- * @subpackage Xml
  * @todo       Attribute support
  */
 
@@ -51,11 +50,11 @@ use InvalidArgumentException;
 
 class Xml
 {
-
     /**
      * Instance of DomDocument.
      *
      * @access public
+     *
      * @var DomDocument
      */
     protected $dom;
@@ -69,6 +68,7 @@ class Xml
      *
      * @todo   Add support for multiple encodings
      * @access public
+     *
      * @param string $from XML root element name or DomDocument object with XML-data
      */
     public function __construct($from = false)
@@ -77,10 +77,10 @@ class Xml
             $this->dom = $from;
         } else {
             if (!$from || !$this->validateNodeName($from)) {
-                $from = "root";
+                $from = 'root';
             }
 
-            $this->dom = new DomDocument("1.0", "utf-8");
+            $this->dom = new DomDocument('1.0', 'utf-8');
             $this->dom->preserveWhiteSpace = false;
             $this->dom->resolveExternals = false;
             $this->dom->formatOutput = false;
@@ -92,15 +92,17 @@ class Xml
      * Checks if strings is valid as XML node name.
      *
      * @access public
-     * @param  string $node Node name
-     * @return bool   True if string can be used as node name, otherwise false.
+     *
+     * @param string $node Node name
+     *
+     * @return bool True if string can be used as node name, otherwise false.
      */
     public static function validateNodeName($node)
     {
-        if(empty($node)
+        if (empty($node)
             || is_numeric(substr($node, 0, 1))
-            || substr(strtolower($node), 0, 3) === "xml"
-            || strstr($node, " ")) {
+            || substr(strtolower($node), 0, 3) === 'xml'
+            || strstr($node, ' ')) {
             return false;
         }
 
@@ -111,6 +113,7 @@ class Xml
      * Returns XML data as string.
      *
      * @access public
+     *
      * @return string
      */
     public function toString()
@@ -118,7 +121,7 @@ class Xml
         return (string) $this->dom->saveXML();
     }
 
-    public function toObject($path = "/*")
+    public function toObject($path = '/*')
     {
         return $this->nodeToObject($path);
     }
@@ -134,8 +137,9 @@ class Xml
      * $object parameter can also be an array but array keys must be strings.
      *
      * @access  public
-     * @param object  $object XMLVars object or array
-     * @param boolean $cdata  Defines if we create CDATA section to XMLtree
+     *
+     * @param object $object XMLVars object or array
+     * @param bool   $cdata  Defines if we create CDATA section to XMLtree
      */
     public function addObject($object, $cdata = false, $path = false)
     {
@@ -162,19 +166,20 @@ class Xml
     }
 
     /**
-    * Adds XML from file.
-    *
-    * @param string $file Target file
-    * @param mixed $path False or xpath string which will be returned as object from file.
-    * @return mixed
-    */
+     * Adds XML from file.
+     *
+     * @param string $file Target file
+     * @param mixed  $path False or xpath string which will be returned as object from file.
+     *
+     * @return mixed
+     */
     public static function fromFile($file, $path = false)
     {
         if (!is_file($file)) {
-            throw new InvalidArgumentException("Source file for XML data was not found.");
+            throw new InvalidArgumentException('Source file for XML data was not found.');
         }
 
-        $xml = new DomDocument;
+        $xml = new DomDocument();
         $xml->load($file);
         $xml = new Xml($xml);
 
@@ -182,15 +187,16 @@ class Xml
     }
 
     /**
-    * Adds XML from string.
-    *
-    * @param string $string XML as string
-    * @param mixed $path False or xpath string which will be returned as object from XML string.
-    * @return mixed
-    */
+     * Adds XML from string.
+     *
+     * @param string $string XML as string
+     * @param mixed  $path   False or xpath string which will be returned as object from XML string.
+     *
+     * @return mixed
+     */
     public static function fromString($string, $path = false)
     {
-        $xml = new DomDocument;
+        $xml = new DomDocument();
         $xml->loadXML($string);
         $xml = new Xml($xml);
 
@@ -202,13 +208,14 @@ class Xml
      *
      * @todo   Validate $key (would it create too much overhead?)
      * @access private
-     * @param object  $obj   Object to parse. In theory arrays will work if keys are not integers.
-     * @param object  $top   Toplevel DOM object
-     * @param boolean $cdata Creates CDATASection if true
+     *
+     * @param object $obj   Object to parse. In theory arrays will work if keys are not integers.
+     * @param object $top   Toplevel DOM object
+     * @param bool   $cdata Creates CDATASection if true
      */
     protected function objectToNode($obj, $top, $cdata)
     {
-        foreach ($obj as $key=>$val) {
+        foreach ($obj as $key => $val) {
             if (is_array($val) || is_object($val) && $val instanceof ArrayAccess) {
                 foreach ($val as $v) {
                     $item = $this->dom->createElement($key);
@@ -242,12 +249,14 @@ class Xml
     }
 
     /**
-     * Parses XML and converts it to object
+     * Parses XML and converts it to object.
      *
      * @access private
-     * @param  string   $path  XPath to XML element to return as object
-     * @param  DomXPath $xpath DomXPath object from current DomDocument
-     * @return mixed    Either array, stdClass or false on error
+     *
+     * @param string   $path  XPath to XML element to return as object
+     * @param DomXPath $xpath DomXPath object from current DomDocument
+     *
+     * @return mixed Either array, stdClass or false on error
      */
     protected function nodeToObject($path, $xpath = false)
     {
@@ -262,11 +271,11 @@ class Xml
 
         if ($items->length > 1) {
             $retval = array();
-            foreach ($items as $k=>$item) {
-                array_push($retval, $this->nodeToObject("{$path}[".($k+1)."]", $xpath));
+            foreach ($items as $k => $item) {
+                array_push($retval, $this->nodeToObject("{$path}[".($k+1).']', $xpath));
             }
         } else {
-            $retval = new stdClass;
+            $retval = new stdClass();
             $nodelist = $xpath->query("{$path}/*");
 
             foreach ($nodelist as $item) {
@@ -308,6 +317,7 @@ class Xml
      * self to string conversion.
      *
      * @access public
+     *
      * @return string XML data as string
      */
     public function __toString()
@@ -315,9 +325,7 @@ class Xml
         try {
             return (string) $this->toString();
         } catch (Exception $e) {
-            return "";
+            return '';
         }
-
     }
-
 }

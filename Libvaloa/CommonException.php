@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Joni Halme <jontsa@amigaone.cc>
+ * Joni Halme <jontsa@amigaone.cc>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2006 Joni Halme <jontsa@amigaone.cc>
@@ -32,16 +33,12 @@
 
 /**
  * Main exception class. All other libvaloa exceptions should extend this class.
- *
- * @package       Kernel
- * @subpackage    Common
  */
 
 namespace Libvaloa;
 
 class CommonException extends Exception
 {
-
     public function __construct($message = null, $code = 0)
     {
         parent::__construct($message, $code, $previous);
@@ -55,16 +52,15 @@ class CommonException extends Exception
     public function __call($m, $a)
     {
         foreach (debug_backtrace() as $tv) {
-            if (isset($tv["function"]) && $tv["function"] === $m) {
+            if (isset($tv['function']) && $tv['function'] === $m) {
                 break;
             }
         }
 
-        trigger_error("Call to an undefined method ".
+        trigger_error('Call to an undefined method '.
             get_class($this)."::{$m}() in {$tv['file']} line {$tv['line']}",
             E_USER_ERROR);
 
         exit;
     }
-
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2013 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -34,7 +35,6 @@ namespace Libvaloa\Auth;
 
 class Password
 {
-
     /**
      * Settings.
      *
@@ -45,14 +45,15 @@ class Password
      * @var array
      */
     public static $properties = array(
-        'passwordUseCrypt' => 1
+        'passwordUseCrypt' => 1,
     );
 
     /**
      * Hash password for safe storage.
      *
-     * @param  type   $username
-     * @param  type   $plaintextPassword
+     * @param type $username
+     * @param type $plaintextPassword
+     *
      * @return string
      */
     public static function cryptPassword($username, $plaintextPassword)
@@ -74,10 +75,11 @@ class Password
     /**
      * Verifies crypted password.
      *
-     * @param  type    $username
-     * @param  type    $plaintextPassword
-     * @param  type    $crypted
-     * @return boolean
+     * @param type $username
+     * @param type $plaintextPassword
+     * @param type $crypted
+     *
+     * @return bool
      */
     public static function verify($username, $plaintextPassword, $crypted)
     {
@@ -95,5 +97,4 @@ class Password
 
         return false;
     }
-
 }

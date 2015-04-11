@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2004 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -34,9 +35,6 @@
  * Authentication library.
  *
  * Handles user authentication and validation.
- *
- * @package       Kernel
- * @subpackage    Auth
  */
 
 namespace Libvaloa\Auth;
@@ -44,9 +42,9 @@ namespace Libvaloa\Auth;
 use Libvaloa\Controller\Request;
 
 /**
- * Auth api interface
+ * Auth api interface.
  */
-Interface AuthIFace
+interface AuthIFace
 {
     public function authenticate($user, $pass);
     public function authorize($controller, $user);
@@ -56,16 +54,15 @@ Interface AuthIFace
 }
 
 /**
- * Password reset interface
+ * Password reset interface.
  */
-Interface PWResetIFace
+interface PWResetIFace
 {
     public function updatePassword($user, $pass);
 }
 
 class Auth
 {
-
     /**
      * Settings.
      *
@@ -78,7 +75,7 @@ class Auth
      */
     public $properties = array(
         'authCheckIP' => 0,
-        'authCheckForwardFor' => 1
+        'authCheckForwardFor' => 1,
     );
 
     private $backend;
@@ -90,7 +87,6 @@ class Auth
      */
     public function __construct()
     {
-
     }
 
     /**
@@ -104,17 +100,17 @@ class Auth
     }
 
     /**
-     * Returns client IP
+     * Returns client IP.
      *
      * @return mixed
      */
     public static function getClientIP()
     {
-        $auth = new Auth;
+        $auth = new Auth();
         $properties = $auth->properties;
 
         // Support for cache servers such as Varnish.
-        if($properties['authCheckForwardFor'] == 1
+        if ($properties['authCheckForwardFor'] == 1
             && (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
             && !empty($_SERVER['HTTP_X_FORWARDED_FOR']))) {
             return $_SERVER['HTTP_X_FORWARDED_FOR'];
@@ -127,6 +123,7 @@ class Auth
      * Override default authentication driver.
      *
      * @access      public
+     *
      * @param string $driver Authentication driver
      */
     public function setAuthenticationDriver(AuthIFace $driver)
@@ -141,13 +138,15 @@ class Auth
      * authentication() method..
      *
      * @access      public
-     * @param  string $user Username
-     * @param  string $pass Password
-     * @return bool   Boolean wether or not authentication was valid
+     *
+     * @param string $user Username
+     * @param string $pass Password
+     *
+     * @return bool Boolean wether or not authentication was valid
      */
     public function authenticate($user, $pass)
     {
-        $auth = new $this->backend;
+        $auth = new $this->backend();
         $request = Request::getInstance();
 
         if ($auth->authenticate($user, $pass)) {
@@ -167,13 +166,15 @@ class Auth
      * Updates user password using available authentication driver.
      *
      * @access public
-     * @param  string $username Username
-     * @param  string $password Password
-     * @return bool   Return value from auth drivers updatePassword method
+     *
+     * @param string $username Username
+     * @param string $password Password
+     *
+     * @return bool Return value from auth drivers updatePassword method
      */
     public function updatePassword($username, $password)
     {
-        $auth = new $this->backend;
+        $auth = new $this->backend();
 
         if ($auth instanceof PWResetIFace) {
             return $auth->updatePassword($username, $password);
@@ -187,17 +188,19 @@ class Auth
      * (groupfeature or userfeature).
      *
      * @access      public
-     * @param  string $module Controller name
-     * @return bool   True (access granted) or false (access denied)
+     *
+     * @param string $module Controller name
+     *
+     * @return bool True (access granted) or false (access denied)
      */
     public function authorize($controller, $userID = false)
     {
-        $auth = new $this->backend;
+        $auth = new $this->backend();
 
         // trying to get from other installation on the same server
         $baseUri = Request::getInstance()->getBaseUri(true);
 
-        if(!$controller
+        if (!$controller
             || isset($_SESSION['BaseUri'])
             && $_SESSION['BaseUri'] != $baseUri) {
             return false;
@@ -221,7 +224,7 @@ class Auth
      */
     public function logout()
     {
-        $auth = new $this->backend;
+        $auth = new $this->backend();
         $pageuri = Request::getInstance();
 
         $auth->logout();
@@ -232,5 +235,4 @@ class Auth
 
         return true;
     }
-
 }

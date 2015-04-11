@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2010 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -33,14 +34,12 @@
 namespace Libvaloa\Db;
 
 use Libvaloa\Debug;
-
 use stdClass;
 use InvalidArgumentException;
 use OutOfBoundsException;
 
 class Object
 {
-
     private $db;
     private $struct;
     private $primaryKey = 'id'; // name of the primary key field in table
@@ -50,27 +49,27 @@ class Object
     private $columns = false;
 
     /**
-     * Constructor - give the name of the target table
+     * Constructor - give the name of the target table.
      *
      * @param string $structName Target table
      */
     public function __construct($table = false, $dbconn = false)
     {
         if (!$table) {
-            throw new InvalidArgumentException("Data structure name needed.");
+            throw new InvalidArgumentException('Data structure name needed.');
         }
 
         if (!$dbconn) {
-            throw new InvalidArgumentException("DB connection needed.");
+            throw new InvalidArgumentException('DB connection needed.');
         }
 
         $this->struct = $table;
-        $this->data = new stdClass;
+        $this->data = new stdClass();
         $this->db = $dbconn;
     }
 
     /**
-     * Set primary key field, defaults to id
+     * Set primary key field, defaults to id.
      *
      * @param string $key Primary key field
      */
@@ -127,7 +126,7 @@ class Object
 
                     $this->columns = true;
                 } catch (Exception $e) {
-                    Debug::__print("Could not query table structure");
+                    Debug::__print('Could not query table structure');
                     Debug::__print($e->getMessage());
                 }
             break;
@@ -135,7 +134,7 @@ class Object
     }
 
     /**
-     * Get a column
+     * Get a column.
      *
      * @param string $field
      */
@@ -147,7 +146,7 @@ class Object
             $this->_byID();
         }
 
-        if ($field == "primaryKey") {
+        if ($field == 'primaryKey') {
             return $this->primaryKey;
         }
 
@@ -155,7 +154,7 @@ class Object
     }
 
     /**
-     * Set a column
+     * Set a column.
      *
      * @param string $key
      * @param string $value
@@ -180,11 +179,10 @@ class Object
                 }
             }
         }
-
     }
 
     /**
-     * Load row by ID
+     * Load row by ID.
      *
      * @param int $id
      */
@@ -214,7 +212,7 @@ class Object
     }
 
     /**
-     * Insert/update row
+     * Insert/update row.
      */
     public function save()
     {
@@ -230,25 +228,24 @@ class Object
             $this->data->{$this->primaryKey} = null;
         }
 
-        $fields = $values = $updates = "";
+        $fields = $values = $updates = '';
         foreach ($this->data as $key => $val) {
-            $fields[$key] = "?";
+            $fields[$key] = '?';
         }
 
         if (!is_numeric($this->data->{$this->primaryKey})) {
             $query = "
-                INSERT INTO {$this->struct} (`".implode("`,`",array_keys($fields))."`)
-                VALUES (".implode(",", $fields).")";
+                INSERT INTO {$this->struct} (`".implode('`,`', array_keys($fields)).'`)
+                VALUES ('.implode(',', $fields).')';
 
             if ($this->db->properties['db_server'] === 'postgres') {
-                $query.= " RETURNING {$this->primaryKey}";
+                $query .= " RETURNING {$this->primaryKey}";
             }
         } else {
             $query = "
                 UPDATE {$this->struct}
-                SET `".implode("` = ?,`",array_keys($fields))."` = ?
+                SET `".implode('` = ?,`', array_keys($fields))."` = ?
                 WHERE {$this->primaryKey} = ?";
-
         }
 
         unset($fields);
@@ -276,7 +273,7 @@ class Object
     }
 
     /**
-     * Delete row
+     * Delete row.
      */
     public function delete()
     {
@@ -284,9 +281,9 @@ class Object
             $this->_byID();
         }
 
-        if(!isset($this->data->{$this->primaryKey})
+        if (!isset($this->data->{$this->primaryKey})
             || !is_numeric($this->data->{$this->primaryKey})) {
-            return null;
+            return;
         }
 
         $query = "
@@ -298,5 +295,4 @@ class Object
 
         $stmt->execute();
     }
-
 }

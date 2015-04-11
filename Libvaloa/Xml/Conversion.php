@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Joni Halme <jontsa@angelinecms.info>
+ * Joni Halme <jontsa@angelinecms.info>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2010 Joni Halme <jontsa@angelinecms.info>
@@ -36,7 +37,7 @@
  * - SimpleXML
  * - String
  * - PHP object
- * - File
+ * - File.
  *
  * It can also apply stylesheets to any of the previous inputs and output the
  * parsed data in any of these formats.
@@ -66,16 +67,13 @@
 namespace Libvaloa\Xml;
 
 use stdClass;
-
 use DomDocument;
 use DomAttr;
 use DomNode;
 use DomXPath;
-
 use SimpleXMLElement;
 use XsltProcessor;
 use ArrayAccess;
-
 use BadMethodCallException;
 use InvalidArgumentException;
 
@@ -88,8 +86,10 @@ class Conversion
     /**
      * Constructor takes the source XML as parameter.
      * The source can be any of the supported formats:
-     * DomDocument, SimpleXMLElement, PHP object, path to file or XML string
+     * DomDocument, SimpleXMLElement, PHP object, path to file or XML string.
+     *
      * @param mixed $source Pointer to source
+     *
      * @todo allow DomNodes alongside of DomDocument as parameter
      */
     public function __construct(&$source)
@@ -97,8 +97,8 @@ class Conversion
         if ($source instanceof DomDocument) {
             $this->is = 0;
         } elseif ($source instanceof SimpleXMLElement) {
-            if (!class_exists("SimpleXMLElement")) {
-                throw new BadMethodCallException("Can not parse XML from SimpleXMLElement. SimpleXML extension is missing.");
+            if (!class_exists('SimpleXMLElement')) {
+                throw new BadMethodCallException('Can not parse XML from SimpleXMLElement. SimpleXML extension is missing.');
             }
 
             $this->is = 1;
@@ -114,14 +114,14 @@ class Conversion
             // @todo validation, charset selection
             $this->is = 4;
         } else {
-            throw new InvalidArgumentException("XML source is invalid.");
+            throw new InvalidArgumentException('XML source is invalid.');
         }
         $this->source = $source;
     }
 
     /**
-    * @todo should we catch exceptions and return error string?
-    */
+     * @todo should we catch exceptions and return error string?
+     */
     public function __toString()
     {
         return $this->toString();
@@ -129,8 +129,11 @@ class Conversion
 
     /**
      * Converts source to XML string.
-     * @param  bool   $applystyles Apply stylesheets yes/no. Default is true.
+     *
+     * @param bool $applystyles Apply stylesheets yes/no. Default is true.
+     *
      * @return string
+     *
      * @todo support for passing XsltProcessor as parameter
      * @todo support for DomNode as source when passing data to XsltProcessor
      */
@@ -171,8 +174,11 @@ class Conversion
 
     /**
      * Converts source to DomDocument.
-     * @param  bool        $applystyles Apply stylesheets yes/no. Default is true.
+     *
+     * @param bool $applystyles Apply stylesheets yes/no. Default is true.
+     *
      * @return DomDocument
+     *
      * @todo support for passing XsltProcessor as parameter
      */
     public function toDOM($applystyles = true)
@@ -189,16 +195,16 @@ class Conversion
                 }
 
                 // when parameter for constructor was DomNode
-                $dom = new DomDocument("1.0", "utf-8");
+                $dom = new DomDocument('1.0', 'utf-8');
                 $dome = $dom->importNode($this->source, true);
                 $dom->appendChild($dome);
 
                 return $dom;
             case 1:
                 // @todo detect charset from simplexml?
-                $dom = new DomDocument("1.0", "utf-8");
+                $dom = new DomDocument('1.0', 'utf-8');
                 $dome = dom_import_simplexml($this->source);
-                $dome = $dom->importNode($dome,true);
+                $dome = $dom->importNode($dome, true);
                 $dom->appendChild($dome);
 
                 return $dom;
@@ -206,21 +212,24 @@ class Conversion
                 $dom = $this->objectToDom($this->source);
                 break;
             case 3:
-                $dom = new DomDocument;
+                $dom = new DomDocument();
                 $dom->load($this->source);
                 break;
             case 4:
-                $dom = new DomDocument;
+                $dom = new DomDocument();
                 $dom->loadXML($this->source);
         }
 
-        return isset($proc)?$proc->transformToDoc($dom):$dom;
+        return isset($proc) ? $proc->transformToDoc($dom) : $dom;
     }
 
     /**
      * Converts source to SimpleXMLElement.
-     * @param  bool             $applystyles Apply stylesheets yes/no. Default is true.
+     *
+     * @param bool $applystyles Apply stylesheets yes/no. Default is true.
+     *
      * @return SimpleXMLElement
+     *
      * @todo support for passing XsltProcessor as parameter
      * @todo check simplexml_load_file() return value for false
      * @todo simplexml_check load_string() return value for false
@@ -251,8 +260,11 @@ class Conversion
 
     /**
      * Converts source to PHP object.
-     * @param  bool   $applystyles Apply stylesheets yes/no. Default is true.
+     *
+     * @param bool $applystyles Apply stylesheets yes/no. Default is true.
+     *
      * @return object
+     *
      * @todo support for passing XsltProcessor as parameter
      * @todo alternate method for converting simplexml to object?
      */
@@ -269,9 +281,12 @@ class Conversion
 
     /**
      * Converts source to XML string and write it to file.
-     * @param  mixed  $filename    Optional filename to write to, default is to create temporary file
-     * @param  bool   $applystyles Apply stylesheets yes/no. Default is true.
+     *
+     * @param mixed $filename    Optional filename to write to, default is to create temporary file
+     * @param bool  $applystyles Apply stylesheets yes/no. Default is true.
+     *
      * @return string Filename
+     *
      * @todo support for passing XsltProcessor as parameter
      * @todo Filewriting, creating temporary files
      */
@@ -282,7 +297,9 @@ class Conversion
 
     /**
      * Add stylesheet(s) to converter.
+     *
      * @param mixed $files Either single file path as string or array of files
+     *
      * @todo support for stylesheets in string
      */
     public function addStylesheet($files)
@@ -312,17 +329,19 @@ class Conversion
 
     /**
      * Converts XSL files to XsltProcessor instance.
-     * @param  mixed         $files Either single file path as string or array of files
+     *
+     * @param mixed $files Either single file path as string or array of files
+     *
      * @return XsltProcessor
      */
     public static function stylesToProc($files = array())
     {
-        if (!class_exists("XsltProcessor")) {
-            throw new BadMethodCallException("XSL extension is missing. Can not create XsltProcessor.");
+        if (!class_exists('XsltProcessor')) {
+            throw new BadMethodCallException('XSL extension is missing. Can not create XsltProcessor.');
         }
 
         $dom = self::stylesToDOM($files);
-        $proc = new XsltProcessor;
+        $proc = new XsltProcessor();
         $proc->importStylesheet($dom);
 
         return $proc;
@@ -330,18 +349,20 @@ class Conversion
 
     /**
      * Converts XSL files to DomDocument.
-     * @param  mixed       $files Either single file path as string or array of files, files can also be DomDocuments
+     *
+     * @param mixed $files Either single file path as string or array of files, files can also be DomDocuments
+     *
      * @return DomDocument
      */
     public static function stylesToDOM($files = array())
     {
         foreach ($files as $primary => &$v) {
             if (!$v instanceof DomDocument) {
-                $dom = new DomDocument;
+                $dom = new DomDocument();
                 $dom->load($v);
             }
 
-            if ($dom->firstChild->nodeName === "xsl:stylesheet") {
+            if ($dom->firstChild->nodeName === 'xsl:stylesheet') {
                 break;
             }
 
@@ -349,16 +370,16 @@ class Conversion
         }
 
         if (!isset($primary)) {
-            throw new RuntimeException("No valid XML stylesheets were found for XSLT parser.");
+            throw new RuntimeException('No valid XML stylesheets were found for XSLT parser.');
         }
 
-        foreach ($files as $k=>&$v) {
+        foreach ($files as $k => &$v) {
             if ($k === $primary) {
                 continue;
             }
 
             if ($v instanceof DomDocument) {
-                if ($v->firstChild->nodeName !== "xsl:stylesheet") {
+                if ($v->firstChild->nodeName !== 'xsl:stylesheet') {
                     continue;
                 }
 
@@ -366,8 +387,8 @@ class Conversion
                     $dom->appendChild($dom->importNode($include, true));
                 }
             } else {
-                $include = $dom->createElementNS("http://www.w3.org/1999/XSL/Transform","xsl:include");
-                $include->setAttributeNode(new DomAttr("href", $v));
+                $include = $dom->createElementNS('http://www.w3.org/1999/XSL/Transform', 'xsl:include');
+                $include->setAttributeNode(new DomAttr('href', $v));
                 $dom->firstChild->appendChild($include);
             }
         }
@@ -379,12 +400,14 @@ class Conversion
      * Converts PHP object to DomDocument.
      * Note that only the first element in object is converted as XML
      * can only have one root element.
-     * @param  mixed       $obj;
+     *
+     * @param mixed $obj;
+     *
      * @return DomDocument
      */
     private function objectToDom($obj)
     {
-        $doc = new DomDocument("1.0", "utf-8");
+        $doc = new DomDocument('1.0', 'utf-8');
 
         foreach ($obj as $k => &$v) {
             $node = $this->handleObject($v, $doc->createElement($k), $doc);
@@ -398,6 +421,7 @@ class Conversion
 
     /**
      * Recursive object to DomElement converter.
+     *
      * @param stdClass    $obj
      * @param DomNode     $node
      * @param DomDocument $doc  Root document
@@ -409,7 +433,7 @@ class Conversion
         }
 
         foreach ($obj as $key => &$val) {
-            if (in_array($key, array("__attr", "__cdata"), true)) {
+            if (in_array($key, array('__attr', '__cdata'), true)) {
                 continue;
             } elseif (is_array($val) || $val instanceof ArrayAccess) {
                 foreach ($val as $k => &$v) {
@@ -453,7 +477,7 @@ class Conversion
 
     private function domToObject($dom)
     {
-        return $this->handleNode("/*", new DomXPath($dom));
+        return $this->handleNode('/*', new DomXPath($dom));
     }
 
     /**
@@ -473,10 +497,10 @@ class Conversion
             $retval = array();
 
             foreach ($items as $k => $item) {
-                array_push($retval, $this->handleNode("{$path}[".($k+1)."]", $xpath));
+                array_push($retval, $this->handleNode("{$path}[".($k+1).']', $xpath));
             }
         } else {
-            $retval = new stdClass;
+            $retval = new stdClass();
             $nodelist = $xpath->query("{$path}/*");
 
             foreach ($nodelist as $item) {
@@ -514,5 +538,4 @@ class Conversion
 
         return $retval;
     }
-
 }

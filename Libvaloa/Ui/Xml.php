@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2004,2013,2014 Tarmo Alexander Sundström <ta@sundstrom.im>
@@ -33,8 +34,6 @@
 /**
  * Creates XHTML user interface using Xml_Xsl.
  *
- * @package    Kernel
- * @subpackage Xml
  * @uses       Xml_Xsl
  */
 
@@ -44,13 +43,13 @@ use stdClass;
 use Libvaloa\Debug;
 use Libvaloa\Xml\Xsl as Xsl;
 
-class Xml extends \Libvaloa\Xml\Xml Implements Ui
+class Xml extends \Libvaloa\Xml\Xml implements Ui
 {
-
     public $issetpageroot = false;
 
     /**
      * @access private
+     *
      * @var DOMElement 'pageroot' which can be anything. Default is 'index'
      */
     private $page;
@@ -77,13 +76,14 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
         'contenttype' => 'text/html',
         'useCache' => 0,
         'override_template' => false,
-        'override_layout' => false
+        'override_layout' => false,
     );
 
     /**
      * Constructor.
      *
      * @access public
+     *
      * @param mixed $root XML page root. Default is 'page' and you
      *                    shouldn't change this
      */
@@ -91,10 +91,10 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
     {
         parent::__construct($root);
 
-        $this->xsl = new Xsl;
+        $this->xsl = new Xsl();
         $this->xsl->properties['useCache'] = $this->properties['useCache'];
         $this->page = $this->dom->createElement('index');
-        $this->requisites = new stdClass;
+        $this->requisites = new stdClass();
     }
 
     public function includePath($paths)
@@ -115,6 +115,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
 
     /**
      * Swap between xhtml and xml output.
+     *
      * @param bool $val
      */
     public function asXML($val)
@@ -129,7 +130,9 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      *      root before adding XML.
      *
      * @access public
-     * @param  string $root Pageroot node name
+     *
+     * @param string $root Pageroot node name
+     *
      * @return bool
      */
     public function setPageRoot($root = false)
@@ -147,9 +150,10 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
     }
 
     /**
-    * Returns if page root isset
-    * @return mixed
-    */
+     * Returns if page root isset.
+     *
+     * @return mixed
+     */
     public function issetPageRoot()
     {
         return $this->issetpageroot;
@@ -162,10 +166,11 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      *
      * @todo    Validate $object
      * @access  public
-     * @param object  $object XMLVars object
-     * @param boolean $cdata  Defines if we create CDATA section to XMLtree
-     * @param mixed   $key    Optional nodename to put XML data under. If false,
-     *                        data is put to page root, otherwise to XML-root.
+     *
+     * @param object $object XMLVars object
+     * @param bool   $cdata  Defines if we create CDATA section to XMLtree
+     * @param mixed  $key    Optional nodename to put XML data under. If false,
+     *                       data is put to page root, otherwise to XML-root.
      */
     public function addObject($object, $cdata = false, $key = false)
     {
@@ -205,11 +210,12 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      *
      * @param bool $asxml If true, return value will be XML
      * @access public
+     *
      * @uses   Xml_Read
      */
     public function parse($asxml = false)
     {
-        $xml = new stdClass;
+        $xml = new stdClass();
 
         // Error messages to XML
         if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])) {
@@ -257,6 +263,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * XSL files to include.
      *
      * @access public
+     *
      * @return bool
      */
     public function detectMainTemplate()
@@ -276,6 +283,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * Add javascript to be included in XHTML.
      *
      * @access public
+     *
      * @param string $file   Javascript file
      * @param mixed  $module False to search JS-file from current module and
      *                       theme directories, true to search just module directory or name
@@ -292,6 +300,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * File is first looked from theme directory and then from default css directory.
      *
      * @access public
+     *
      * @param string $name   CSS filename
      * @param mixed  $module False to search CSS-file from current module and
      *                       theme directories, true to search just module directory or
@@ -323,11 +332,13 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * method also looks up the file in theme directories.
      *
      * @access public
-     * @param  string $name   XSL-filename without .xsl suffix
-     * @param  mixed  $module False to search XSL-file from current module and
-     *                        theme directories, true to search just module directory or
-     *                        name of the module
-     * @return bool   True if XSL file was included, otherwise false
+     *
+     * @param string $name   XSL-filename without .xsl suffix
+     * @param mixed  $module False to search XSL-file from current module and
+     *                       theme directories, true to search just module directory or
+     *                       name of the module
+     *
+     * @return bool True if XSL file was included, otherwise false
      */
     public function addTemplate($name = false)
     {
@@ -336,7 +347,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
             return false;
         }
 
-        $name.= '.xsl';
+        $name .= '.xsl';
 
         foreach ($this->paths as $path) {
             if (is_readable($path.DIRECTORY_SEPARATOR.$name)) {
@@ -351,6 +362,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * Add a error to session.
      *
      * @access public
+     *
      * @param mixed $message Error message or array of errors
      */
     public function addError($message)
@@ -362,6 +374,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * Add a message to session.
      *
      * @access public
+     *
      * @param mixed  $message Message or array of message strings
      * @param string $class   Tells XSL/CSS which type of message this is
      */
@@ -377,7 +390,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
 
         $message = (array) $message;
         foreach ($message as &$v) {
-            $msgObj = new stdClass;
+            $msgObj = new stdClass();
             $msgObj->item = (string) $v;
             $msgObj->type = $class;
             $_SESSION['messages'][] = $msgObj;
@@ -405,6 +418,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
      * self to string conversion.
      *
      * @access public
+     *
      * @return string XHTML output
      */
     public function __toString()
@@ -412,8 +426,7 @@ class Xml extends \Libvaloa\Xml\Xml Implements Ui
         try {
             return (string) $this->parse();
         } catch (Exception $e) {
-            return "";
+            return '';
         }
     }
-
 }

@@ -1,7 +1,8 @@
 <?php
+
 /**
  * The Initial Developer of the Original Code is
- * Joni Halme <jontsa@amigaone.cc>
+ * Joni Halme <jontsa@amigaone.cc>.
  *
  * Portions created by the Initial Developer are
  * Copyright (C) 2006 Joni Halme <jontsa@amigaone.cc>
@@ -40,17 +41,16 @@ use DomainException;
 use OutOfBoundsException;
 use LogicException;
 use InvalidArgumentException;
-
 use Libvaloa\Debug;
 
 class Db
 {
-
     /**
      * Instance of PDO.
      *
      * @access private
-     * @var    PDO
+     *
+     * @var PDO
      */
     private $conn;
 
@@ -58,7 +58,8 @@ class Db
      * Amount of not commited/rollbacked transactions started with beginTrans().
      *
      * @access private
-     * @var    int
+     *
+     * @var int
      */
     private $transcnt = 0;
 
@@ -67,7 +68,8 @@ class Db
      *
      * @static
      * @access public
-     * @var    int
+     *
+     * @var int
      */
     public static $querycount = 0;
 
@@ -76,13 +78,14 @@ class Db
         'db_host' => '',
         'db_user' => '',
         'db_pass' => '',
-        'db_db' => ''
+        'db_db' => '',
     );
 
     /**
      * Constructor opens connection to database using PDO.
      *
      * @access public
+     *
      * @param string $server   SQL server. defaults to localhost
      * @param string $user     Username at SQL server
      * @param string $pass     Password at SQL server or false if none
@@ -90,6 +93,7 @@ class Db
      * @param string $dbconn   Database type (mysql,sqlite etc). Defaults to mysql
      * @param mixed  $sqlitedb Optional path to SQLite database
      * @param bool   $pconn    Use persistent connection? Defaults to false
+     *
      * @uses   PDO
      */
     public function __construct(
@@ -114,7 +118,7 @@ class Db
         $drivers = PDO::getAvailableDrivers();
 
         if (!in_array($dbconn, $drivers, true)) {
-            throw new RuntimeException("Selected database type is not supported by PDO or PHP is not compiled with the appropriate driver (see www.php.net/pdo).");
+            throw new RuntimeException('Selected database type is not supported by PDO or PHP is not compiled with the appropriate driver (see www.php.net/pdo).');
         }
 
         switch ($dbconn) {
@@ -123,7 +127,7 @@ class Db
                 break;
             case 'sqlite':
                 if (file_exists($database) && !is_readable($database)) {
-                    throw new RuntimeException("Selected SQLite database is not readable. Please check your database settings.");
+                    throw new RuntimeException('Selected SQLite database is not readable. Please check your database settings.');
                 }
                 $dsn = "sqlite:{$database}";
                 break;
@@ -149,7 +153,7 @@ class Db
         }
 
         if ($dbconn != 'mysql' && !empty($initquery)) {
-           $this->exec($initquery);
+            $this->exec($initquery);
         }
     }
 
@@ -159,7 +163,9 @@ class Db
      * Currently supported is transCnt.
      *
      * @access public
-     * @param  string $k
+     *
+     * @param string $k
+     *
      * @return mixed
      */
     public function __get($k)
@@ -170,15 +176,18 @@ class Db
 
         }
 
-        throw new OutOfBoundsException("Program tried to access a non-existant member ".__CLASS__."::{$k}.");
+        throw new OutOfBoundsException('Program tried to access a non-existant member '.__CLASS__."::{$k}.");
     }
 
     /**
      * Executes SQL query and returns results in DB_ResultSet object.
      *
      * @access public
-     * @param  string       $query SQL query
+     *
+     * @param string $query SQL query
+     *
      * @return DB_ResultSet
+     *
      * @uses   Common_Exception
      * @uses   DB_ResultSet
      */
@@ -192,7 +201,7 @@ class Db
 
             return new ResultSet($stmt, true);
         } catch (Exception $e) {
-            throw new DBException("SQL query failed.", 0, $e);
+            throw new DBException('SQL query failed.', 0, $e);
         }
     }
 
@@ -204,8 +213,11 @@ class Db
      * query multiple times with different values.
      *
      * @access public
-     * @param  string       $query SQL query
+     *
+     * @param string $query SQL query
+     *
      * @return DB_ResultSet
+     *
      * @uses   DB_ResultSet
      * @uses   Common_Exception
      */
@@ -222,7 +234,7 @@ class Db
 
             return new ResultSet($this->conn->prepare($query));
         } catch (Exception $e) {
-            throw new DBException("Preparing SQL query failed.", 0, $e);
+            throw new DBException('Preparing SQL query failed.', 0, $e);
         }
     }
 
@@ -234,8 +246,10 @@ class Db
      * faster when doing INSERT, UPDATE etc queries.
      *
      * @access public
-     * @param  string $query SQL query
-     * @return int    Number of affected rows
+     *
+     * @param string $query SQL query
+     *
+     * @return int Number of affected rows
      */
     public function exec($query)
     {
@@ -247,7 +261,7 @@ class Db
             $affected = $this->conn->exec($query);
             self::$querycount++;
         } catch (Exception $e) {
-            throw new DBException("SQL query failed.", 0, $e);
+            throw new DBException('SQL query failed.', 0, $e);
         }
 
         return $affected;
@@ -256,13 +270,13 @@ class Db
     public function lastInsertID()
     {
         if ($this->conn == 'postgres') {
-            throw new DBException("lastInsertID not supported with PostgreSQL, please use RETURNING id");
+            throw new DBException('lastInsertID not supported with PostgreSQL, please use RETURNING id');
         }
 
         try {
             return $this->conn->lastInsertID();
         } catch (Exception $e) {
-            throw new DBException("Unable to retrieve identifier for last insert query.");
+            throw new DBException('Unable to retrieve identifier for last insert query.');
         }
     }
 
@@ -285,6 +299,7 @@ class Db
      * Begins database transaction if database supports it.
      *
      * @access public
+     *
      * @uses   Common_Exception
      */
     public function beginTransaction()
@@ -293,7 +308,7 @@ class Db
             $this->conn->beginTransaction();
             $this->transcnt++;
         } catch (Exception $e) {
-            throw new RuntimeException("Could not start database transaction.");
+            throw new RuntimeException('Could not start database transaction.');
         }
     }
 
@@ -301,6 +316,7 @@ class Db
      * Commits transaction started with beginTrans().
      *
      * @access public
+     *
      * @param bool $ok If false, method automatically calls rollBack() and transaction is not committed
      */
     public function commit($ok = true)
@@ -317,7 +333,7 @@ class Db
             }
             $this->transcnt--;
         } catch (Exception $e) {
-            throw new RuntimeException("Could not commit database transaction.");
+            throw new RuntimeException('Could not commit database transaction.');
         }
     }
 
@@ -329,26 +345,24 @@ class Db
     public function rollBack()
     {
         if ($this->transcnt < 1) {
-            throw new LogicException("Program attempted to cancel transaction without starting one.");
+            throw new LogicException('Program attempted to cancel transaction without starting one.');
         }
 
         try {
             $this->conn->rollBack();
             $this->transcnt--;
         } catch (Exception $e) {
-            throw new RuntimeException("Could not roll back database transaction.");
+            throw new RuntimeException('Could not roll back database transaction.');
         }
     }
-
 }
 
 class ResultSet implements Iterator
 {
-
     /**
      * Array of rows from executed SQL query.
      *
-     * @var    array
+     * @var array
      */
     private $rows = array();
 
@@ -356,7 +370,8 @@ class ResultSet implements Iterator
 
     /**
      * Current row in resultset.
-     * @var    int
+     *
+     * @var int
      */
     private $index = 0;
 
@@ -368,15 +383,17 @@ class ResultSet implements Iterator
     private $stmt = false;
 
     /**
-    * Binding column count
-    * @param  int
-    */
+     * Binding column count.
+     *
+     * @param  int
+     */
     private $column = 1;
 
     /**
      * Constructor.
      *
      * @access public
+     *
      * @param PDOStatement $stmt     Statement from DB
      * @param bool         $executed If true, rows are read automatically
      *                               from Statement instead of waiting for execute()
@@ -404,17 +421,18 @@ class ResultSet implements Iterator
      * Currently supports fields array and EOF boolean.
      *
      * @access public
+     *
      * @return mixed
      */
     public function __get($k)
     {
         switch ($k) {
-            case "fields":
+            case 'fields':
                 if (isset($this->fields)) {
                     return $this->fields;
                 } elseif (isset($this->rows[$this->index])) {
                     $this->fields = array();
-                    foreach ($this->rows[$this->index] as $k=>$v) {
+                    foreach ($this->rows[$this->index] as $k => $v) {
                         $this->fields[$k] = $v;
                     }
 
@@ -422,8 +440,8 @@ class ResultSet implements Iterator
                 }
 
                 return array();
-            case "EOF":
-                return ($this->index>=$this->recordCount);
+            case 'EOF':
+                return ($this->index >= $this->recordCount);
         }
     }
 
@@ -438,7 +456,7 @@ class ResultSet implements Iterator
             return $this;
         }
 
-        throw new LogicException("Program attempted to set parameter to an executed SQL query.");
+        throw new LogicException('Program attempted to set parameter to an executed SQL query.');
     }
 
     public function setLob($value, $key = false)
@@ -452,7 +470,7 @@ class ResultSet implements Iterator
             return $this;
         }
 
-        throw new LogicException("Program attempted to set parameter to an executed SQL query.");
+        throw new LogicException('Program attempted to set parameter to an executed SQL query.');
     }
 
     public function bind(&$value, $key = false)
@@ -466,7 +484,7 @@ class ResultSet implements Iterator
             return $this;
         }
 
-        throw new LogicException("Program attempted to bind parameter to an executed SQL query.");
+        throw new LogicException('Program attempted to bind parameter to an executed SQL query.');
     }
 
     public function bindLob($value, $key = false)
@@ -480,7 +498,7 @@ class ResultSet implements Iterator
             return $this;
         }
 
-        throw new LogicException("Program attempted to bind parameter to an executed SQL query.");
+        throw new LogicException('Program attempted to bind parameter to an executed SQL query.');
     }
 
     /**
@@ -489,6 +507,7 @@ class ResultSet implements Iterator
      * After this, you can use resultset as you would have called it via DB::execute().
      *
      * @access public
+     *
      * @uses   DB
      */
     public function execute()
@@ -507,11 +526,11 @@ class ResultSet implements Iterator
                 $this->column = 1;
             } catch (Exception $e) {
                 Debug::__print($this->stmt);
-                throw new DB_Exception("Executing a prepared query failed.", 0, $e);
+                throw new DB_Exception('Executing a prepared query failed.', 0, $e);
             }
             DB::$querycount++;
         } else {
-            throw new DB_Exception("Program attempted to execute query twice.");
+            throw new DB_Exception('Program attempted to execute query twice.');
         }
 
         return $this;
@@ -521,6 +540,7 @@ class ResultSet implements Iterator
      * Returns current row as an stdClass object and moves pointer to next row.
      *
      * @access public
+     *
      * @return mixed stdClass or false if there are no rows
      */
     public function fetch()
@@ -594,5 +614,4 @@ class ResultSet implements Iterator
     {
         return $this->stmt->rowCount();
     }
-
 }
