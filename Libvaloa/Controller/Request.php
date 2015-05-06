@@ -64,7 +64,7 @@ class Request
         $uri = $_SERVER['HTTP_HOST'].$tmp.str_replace(str_replace('index.php', '', $tmp), '/', $_SERVER['REQUEST_URI']);
 
         // http/https autodetect
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') || $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
             $prefix = 'https://';
         } else {
             $prefix = 'http://';
@@ -112,6 +112,10 @@ class Request
         if (isset($_SERVER['HTTPS'])) {
             $this->protocol = ($_SERVER['HTTPS']
                 && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
+        }
+
+        if ($_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            $this->protocol = 'https';
         }
 
         self::$instance = $this;
