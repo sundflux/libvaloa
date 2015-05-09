@@ -34,7 +34,7 @@
 namespace Libvaloa;
 
 use stdClass;
-use Libvaloa\Controller\Request;
+use Webvaloa\Controller\Request;
 
 class Debug
 {
