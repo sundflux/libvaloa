@@ -46,10 +46,10 @@ use Libvaloa\Controller\Request;
  */
 interface AuthIFace
 {
-    public function authenticate($user, $pass);
-    public function authorize($controller, $user);
-    public function getUserID($user);
-    public function getSessionID($user);
+    public function authenticate($username, $password);
+    public function authorize($controller, $username);
+    public function getUserID($username);
+    public function getSessionID($username);
     public function logout();
 }
 
@@ -58,7 +58,7 @@ interface AuthIFace
  */
 interface PWResetIFace
 {
-    public function updatePassword($user, $pass);
+    public function updatePassword($username, $password);
 }
 
 class Auth
@@ -144,15 +144,18 @@ class Auth
      *
      * @return bool Boolean wether or not authentication was valid
      */
-    public function authenticate($user, $pass)
+    public function authenticate($username, $password)
     {
+        $username = trim($username);
+        $password = trim($password);
+
         $auth = new $this->backend();
         $request = Request::getInstance();
 
-        if ($auth->authenticate($user, $pass)) {
-            $_SESSION['User'] = $user;
-            $_SESSION['UserID'] = $auth->getUserID($user);
-            $_SESSION['ExternalSessionID'] = $auth->getSessionID($user);
+        if ($auth->authenticate($username, $password)) {
+            $_SESSION['User'] = $username;
+            $_SESSION['UserID'] = $auth->getUserID($username);
+            $_SESSION['ExternalSessionID'] = $auth->getSessionID($username);
             $_SESSION['ClientIP'] = self::getClientIP();
             $_SESSION['BaseUri'] = $request->getBaseUri(true);
 
@@ -174,6 +177,9 @@ class Auth
      */
     public function updatePassword($username, $password)
     {
+        $username = trim($username);
+        $password = trim($password);
+
         $auth = new $this->backend();
 
         if ($auth instanceof PWResetIFace) {
