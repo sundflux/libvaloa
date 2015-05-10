@@ -34,7 +34,6 @@
 namespace Libvaloa;
 
 use stdClass;
-use Webvaloa\Controller\Request;
 
 class Debug
 {
@@ -114,8 +113,16 @@ class Debug
      */
     public static function __print()
     {
-        if (error_reporting() != E_ALL || Request::getInstance()->isJson() || Request::getInstance()->isAjax()) {
+        // Prevent output when doing AJAX/JSON requests
+
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+            && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             return;
+
+            if (isset($_SERVER['HTTP_ACCEPT']) && in_array('application/json',
+                explode(',', $_SERVER['HTTP_ACCEPT']), true)) {
+                return;
+            }
         }
 
         $a = func_get_args();
