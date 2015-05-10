@@ -46,7 +46,7 @@ class Ini
         $this->translated = $this->source = $params[0];
     }
 
-    public function bindTextDomain($domain, $path = false)
+    public function bindTextDomain($domain, $path = '')
     {
         $file = $path.'/'.getenv('LANG').'/LC_MESSAGES/'.$domain.'.ini';
 
