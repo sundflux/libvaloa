@@ -98,7 +98,7 @@ class Xsl
     {
         foreach ($this->xslfiles as $primary => $v) {
             $templateDom = new DomDocument();
-            $templateDom->load($v);
+            $templateDom->load($v, LIBXML_COMPACT);
 
             if ($templateDom->firstChild->nodeName === 'xsl:stylesheet') {
                 break;
