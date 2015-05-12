@@ -31,12 +31,12 @@ Copyright (C) 2004 - 2014 Tarmo Alexander Sundström & contributors.
 - ta@sundstrom.io
 - http://www.libvaloa.com/
 
-# Change Log
+## Change Log
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.0.0] - 2015-05-12
-### Changed
+### [1.0.0] - 2015-05-12
+#### Changed
 - Initial release with stable api.
 
 
