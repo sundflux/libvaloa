@@ -1,0 +1,21 @@
+{
+    "name": "sundflux/libvaloa",
+    "description": "Libvaloa is a small utility library for generating HTML user interfaces using XML+XSL.",
+    "keywords": ["xsl", "xml"],
+    "homepage": "http://github.com/sundflux/libvaloa",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tarmo Alexander Sundstrom",
+            "email": "ta@sundstrom.io",
+            "homepage": "http://www.libvaloa.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {"Libvaloa\\": "src/Libvaloa"}
+    }
+}
