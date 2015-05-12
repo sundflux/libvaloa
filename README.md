@@ -9,7 +9,7 @@ The UI Interface can be hooked to external template engines too.
 
 ## Features:
 
-- XSL/XML/DOM/SimpleXML/PHP Object Conversion library.
+- XSL/XML/DOM/SimpleXML/PHP Object conversion library.
 - Generic UI interface for hooking template engines.
 - Reference UI interface implementation using XSL+XML.
 - Fast and flexible PDO database abstraction.
