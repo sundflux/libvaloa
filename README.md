@@ -11,7 +11,7 @@ In addition to reference XSL+XML implementation, the UI Interface can be hooked 
 
 - PHP 5.4 or newer. Also tested on HHVM 3.6.
 - XSL support enabled (Debian/Ubuntu: php5-xsl package).
-- DOM support enabled (default)
+- DOM support enabled (enabled by default).
 
 ## Features:
 
