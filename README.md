@@ -7,7 +7,7 @@ Libvaloa is a small utility library for generating HTML user interfaces using XM
 
 The UI Interface can be hooked to external template engines too.
 
-Features:
+## Features:
 
 - XSL/XML/DOM/SimpleXML/PHP Object Conversion library.
 - Generic UI interface for hooking template engines.
@@ -16,9 +16,12 @@ Features:
 - Dom debugger
 - Localization interface with example .ini driver.
 
-Copyright (C) 2004 - 2014 Tarmo Alexander Sundström (ta@sundstrom.io) & contributors.
+Copyright (C) 2004 - 2014 Tarmo Alexander Sundström & contributors.
 
-http://www.libvaloa.com/
+## Contact:
+
+- ta@sundstrom.io
+- http://www.libvaloa.com/
 
 # Change Log
 All notable changes to this project will be documented in this file.
