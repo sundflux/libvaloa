@@ -16,7 +16,7 @@ Features:
 - Dom debugger
 - Localization interface with example .ini driver.
 
-Copyright (C) 2004 - 2014 Tarmo Alexander Sundström <mailto:ta@sundstrom.io> & contributors.
+Copyright (C) 2004 - 2014 Tarmo Alexander Sundström (ta@sundstrom.io) & contributors.
 
 http://www.libvaloa.com/
 
