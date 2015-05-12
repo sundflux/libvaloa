@@ -77,6 +77,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         'useCache' => 0,
         'override_template' => false,
         'override_layout' => false,
+        'headers' => false
     );
 
     /**
@@ -154,7 +155,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      *
      * @return mixed
      */
-    public function issetPageRoot()
+    public function getPageRoot()
     {
         return $this->issetpageroot;
     }
@@ -412,6 +413,25 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     public function setPreProcessedTemplateDom($v)
     {
         return $this->xsl->setPreProcessedTemplateDom($v);
+    }
+
+    public function addHeader($header)
+    {
+        if (is_array($this->properties['headers']) && in_array($header, $this->properties['headers'])) {
+            return;
+        }
+
+        return $this->properties['headers'][] = $header;
+    }
+
+    public function getHeaders()
+    {
+        return $this->properties['headers'];
+    }
+
+    public function setHeaders($headers)
+    {
+        return $this->properties['headers'] = $headers;
     }
 
     /**

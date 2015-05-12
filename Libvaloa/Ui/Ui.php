@@ -38,7 +38,7 @@ interface Ui
     public function __construct($from);
     public function includePath($path);
     public function getIncludePaths();
-    public function issetPageRoot();
+    public function getPageRoot();
     public function setPageRoot($pageRoot);
     public function ignoreTemplate($file);
     public function setMainTemplate($file);
@@ -51,6 +51,9 @@ interface Ui
     public function preProcessTemplate();
     public function getPreProcessedTemplateDom();
     public function setPreProcessedTemplateDom($v);
+    public function addHeader($header);
+    public function getHeaders();
+    public function setHeaders($headers);
     public function parse($v);
     public function __toString();
 }
