@@ -5,7 +5,7 @@ libvaloa
 
 Libvaloa is a small utility library for generating HTML user interfaces using XML+XSL, mainly developed for Webvaloa. 
 
-The UI Interface can be hooked to external template engines too.
+In addition to reference XSL+XML implementation, the UI Interface can be hooked to external template engines.
 
 ## Features:
 
