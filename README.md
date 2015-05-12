@@ -5,9 +5,23 @@ libvaloa
 
 Libvaloa is a small utility library for generating HTML user interfaces using XML+XSL, mainly developed for Webvaloa. 
 
-In addition to reference XSL+XML implementation, the UI Interface can be hooked to external template engines.
+In addition to reference XSL+XML implementation, the UI Interface can be hooked to alternative template engines.
 
 http://www.libvaloa.com/
+
+## Installation
+
+Install the latest version with `composer require sundflux/libvaloa`
+
+or include libvaloa in your composer.json
+
+```json
+{
+    "require": {
+        "sundflux/libvaloa": "^1.0.0"
+    }
+}
+```
 
 ## Requirements
 
@@ -18,13 +32,19 @@ http://www.libvaloa.com/
 ## Features
 
 - XSL/XML/DOM/SimpleXML/PHP Object conversion library.
+- Fast and flexible PDO database abstraction.
 - Generic UI interface for hooking template engines.
 - Reference UI interface implementation using XSL+XML.
-- Fast and flexible PDO database abstraction.
 - Debugging helpers, including DOM debugger.
-- Localization interface with example .ini driver.
+- Localization interface.
+- Standards-compatible: PRS-1, PRS-2, PRS-4, verified and fixed with php-cs-fixer.
+- No external dependencies.
+
+## Copyright and license
 
 Copyright (C) 2004 - 2014 Tarmo Alexander Sundström & contributors.
+
+Libvaloa is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact
 
@@ -37,6 +57,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [1.0.0] - 2015-05-12
 #### Changed
-- Initial release with stable api.
-
-
+- Initial release with stable API.
