@@ -19,7 +19,7 @@ In addition to reference XSL+XML implementation, the UI Interface can be hooked 
 - Generic UI interface for hooking template engines.
 - Reference UI interface implementation using XSL+XML.
 - Fast and flexible PDO database abstraction.
-- Debugger helpers, including DOM debugger.
+- Debugging helpers, including DOM debugger.
 - Localization interface with example .ini driver.
 
 Copyright (C) 2004 - 2014 Tarmo Alexander Sundström & contributors.
