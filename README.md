@@ -7,6 +7,8 @@ Libvaloa is a small utility library for generating HTML user interfaces using XM
 
 In addition to reference XSL+XML implementation, the UI Interface can be hooked to external template engines.
 
+http://www.libvaloa.com/
+
 ## Requirements:
 
 - PHP 5.4 or newer. Also tested on HHVM 3.6.
