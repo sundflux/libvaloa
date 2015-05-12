@@ -33,7 +33,7 @@
 
 namespace Libvaloa;
 
-class Benchmark
+class Debugtimer
 {
     private $startTime;
     private $startMem;
@@ -84,7 +84,7 @@ class Benchmark
     public static function benchScript($decimals = 3)
     {
         return sprintf('%0.'.(int) $decimals.'f',
-            (microtime(true) - \Webvaloa\Webvaloa::$time));
+            (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]));
     }
 
     /**

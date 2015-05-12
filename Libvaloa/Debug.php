@@ -52,7 +52,7 @@ class Debug
         }
 
         $debugobj = new stdClass();
-        $debugobj->time = Benchmark::benchScript(5);
+        $debugobj->time = Debugtimer::benchScript(5);
         $debugobj->mu = memory_get_usage();
         $debugobj->type = gettype($value);
 
@@ -84,12 +84,6 @@ class Debug
      */
     public static function dump()
     {
-        if (class_exists('\\Libvaloa\\Db\\Db')) {
-            self::__print('Executed '.\Libvaloa\Db\Db::$querycount.' sql queries');
-        }
-
-        self::__print('Libvaloa finished');
-
         print '<pre id="debug">';
         foreach (self::$data as $v) {
             echo sprintf('<code><strong>%s</strong> <br/> Memory usage %s bytes<br/> %s&#160;[%s]&#160;%s</code><br/>',
