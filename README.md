@@ -9,13 +9,13 @@ In addition to reference XSL+XML implementation, the UI Interface can be hooked 
 
 http://www.libvaloa.com/
 
-## Requirements:
+## Requirements
 
 - PHP 5.4 or newer. Also tested on HHVM 3.6.
 - XSL support enabled (Debian/Ubuntu: php5-xsl package).
 - DOM support enabled (enabled by default).
 
-## Features:
+## Features
 
 - XSL/XML/DOM/SimpleXML/PHP Object conversion library.
 - Generic UI interface for hooking template engines.
@@ -26,7 +26,7 @@ http://www.libvaloa.com/
 
 Copyright (C) 2004 - 2014 Tarmo Alexander Sundström & contributors.
 
-## Contact:
+## Contact
 
 - ta@sundstrom.io
 - http://www.libvaloa.com/
