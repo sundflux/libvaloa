@@ -63,8 +63,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     private $ignoreTemplates = array();
 
     public $properties = array(
-        'controller' => '',
-        'parentController' => '',
         'route' => '',
         'basehref' => '',
         'basepath' => '',
@@ -74,10 +72,9 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         'userid' => '',
         'user' => '',
         'contenttype' => 'text/html',
-        'useCache' => 0,
         'override_template' => false,
         'override_layout' => false,
-        'headers' => false
+        'headers' => false,
     );
 
     /**
@@ -93,12 +90,11 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         parent::__construct($root);
 
         $this->xsl = new Xsl();
-        $this->xsl->properties['useCache'] = $this->properties['useCache'];
         $this->page = $this->dom->createElement('index');
         $this->requisites = new stdClass();
     }
 
-    public function includePath($paths)
+    public function addIncludePath($paths)
     {
         $paths = (array) $paths;
 
@@ -219,9 +215,11 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         $xml = new stdClass();
 
         // Error messages to XML
-        if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])) {
-            $xml->messages = $_SESSION['messages'];
-            unset($_SESSION['messages']);
+        if (session_status() == PHP_SESSION_NONE) {
+            if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])) {
+                $xml->messages = $_SESSION['messages'];
+                unset($_SESSION['messages']);
+            }
         }
 
         // Page requisites
@@ -368,7 +366,31 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      */
     public function addError($message)
     {
-        $this->addMessage($message, 'error');
+        return $this->addMessage($message, 'alert alert-danger');
+    }
+
+    /**
+     * Add a notice to session.
+     *
+     * @access public
+     *
+     * @param mixed $message Error message or array of errors
+     */
+    public function addNotice($message)
+    {
+        return $this->addMessage($message, 'alert alert-warning');
+    }
+
+    /**
+     * Add a success to session.
+     *
+     * @access public
+     *
+     * @param mixed $message Error message or array of errors
+     */
+    public function addSuccess($message)
+    {
+        return $this->addMessage($message, 'alert alert-success');
     }
 
     /**
@@ -379,8 +401,12 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * @param mixed  $message Message or array of message strings
      * @param string $class   Tells XSL/CSS which type of message this is
      */
-    public function addMessage($message, $class = 'message')
+    public function addMessage($message, $class = 'alert alert-info')
     {
+        if (session_status() == PHP_SESSION_NONE) {
+            return false;
+        }
+
         if (!isset($_SESSION['messages'])) {
             $_SESSION['messages'] = array();
         }

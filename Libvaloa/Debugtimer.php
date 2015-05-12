@@ -84,7 +84,7 @@ class Debugtimer
     public static function benchScript($decimals = 3)
     {
         return sprintf('%0.'.(int) $decimals.'f',
-            (microtime(true) - $_SERVER["REQUEST_TIME_FLOAT"]));
+            (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']));
     }
 
     /**
