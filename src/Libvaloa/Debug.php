@@ -34,6 +34,28 @@ namespace Libvaloa;
 
 use stdClass;
 
+/**
+ * Debugger class.
+ *
+ * Prints out debug messages and script benchmarks in non-obstructive manner.
+ * The messages are printed out only if error level is set to E_ALL and
+ * printing happens in template-agnostic way with register_shutdown_function.
+ *
+ * Include:
+ * <code>
+ * use Libvaloa\Debug;
+ * </code>
+ *
+ * in your class/application and simply call:
+ *
+ * <code>
+ * Debug::__print('Hello world');
+ * </code>
+ *
+ * The debug message will print out at end of the page, together with 
+ * memory usage and execution time.
+ * 
+ */
 class Debug
 {
     private static $data = array();
@@ -109,8 +131,6 @@ class Debug
 
     /**
      * Prints debug message with backtrace when E_ALL error level is set.
-     *
-     * @return type
      */
     public static function __print()
     {

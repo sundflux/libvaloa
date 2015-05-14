@@ -32,22 +32,25 @@
  */
 namespace Libvaloa;
 
+/**
+ * Debug timer class.
+ *
+ * Used by Libvaloa\Debug for printing out execution time in debug messages.
+ */
 class Debugtimer
 {
     private $startTime;
     private $startMem;
 
-    /**
-     * Constructor, starts benchmark timing.
-     */
     public function __construct()
     {
         $this->startCounter();
     }
 
     /**
-     * Starts counter by storing current microtime to $startTime variable.
+     * Start debug counter.
      *
+     * Starts counter by storing current microtime to $startTime variable.
      *
      * @return float Current microtime
      */
@@ -70,9 +73,10 @@ class Debugtimer
     }
 
     /**
+     * Get current script execution time.
+     *
      * Stops counter and returns benchmark in seconds from the
      * time libvaloa environment was started.
-     *
      *
      * @param int $decimals number of decimals in benchmark time
      *
@@ -85,8 +89,10 @@ class Debugtimer
     }
 
     /**
-     * Stops counter and returns benchmark in seconds.
+     * Get current script execution time.
      *
+     * Stops counter and returns benchmark in seconds from the
+     * time this instance of the class was started.
      *
      * @param int $decimals number of decimals in benchmark time
      *
