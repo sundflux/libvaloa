@@ -55,6 +55,10 @@ Libvaloa is licensed under the MIT License - see the LICENSE file for details.
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### [1.0.1] - 2015-05-xx
+#### Fixed
+- Libvaloa\Debug: Debug prints should output only when error level is E_ALL
+
 ### [1.0.0] - 2015-05-12
 #### Changed
 - Initial release with stable API.

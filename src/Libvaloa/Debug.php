@@ -45,6 +45,10 @@ class Debug
      */
     public static function append()
     {
+        if (error_reporting() !== E_ALL) {
+            return;
+        }
+
         $value = func_get_args();
 
         if (count($value) < 2) {
@@ -84,6 +88,10 @@ class Debug
      */
     public static function dump()
     {
+        if (error_reporting() !== E_ALL) {
+            return;
+        }
+        
         print '<pre id="debug">';
         foreach (self::$data as $v) {
             echo sprintf('<code><strong>%s</strong> <br/> Memory usage %s bytes<br/> %s&#160;[%s]&#160;%s</code><br/>',
@@ -107,6 +115,10 @@ class Debug
      */
     public static function __print()
     {
+        if (error_reporting() !== E_ALL) {
+            return;
+        }
+
         // Prevent output when doing AJAX/JSON requests
 
         if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])
