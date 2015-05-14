@@ -30,7 +30,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-
 namespace Libvaloa;
 
 use stdClass;
@@ -61,7 +60,7 @@ class Debug
         $debugobj->type = gettype($value);
 
         if (is_array($value) || is_object($value)) {
-            $debugobj->data = @ print_r($value, true);
+            $debugobj->data = @print_r($value, true);
         } else {
             $debugobj->data = $value;
         }
@@ -91,7 +90,7 @@ class Debug
         if (error_reporting() !== E_ALL) {
             return;
         }
-        
+
         print '<pre id="debug">';
         foreach (self::$data as $v) {
             echo sprintf('<code><strong>%s</strong> <br/> Memory usage %s bytes<br/> %s&#160;[%s]&#160;%s</code><br/>',

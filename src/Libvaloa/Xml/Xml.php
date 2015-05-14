@@ -39,7 +39,6 @@
  *
  * @todo       Attribute support
  */
-
 namespace Libvaloa\Xml;
 
 use stdClass;
@@ -53,7 +52,6 @@ class Xml
     /**
      * Instance of DomDocument.
      *
-     * @access public
      *
      * @var DomDocument
      */
@@ -67,7 +65,6 @@ class Xml
      * Fires up DomDocument.
      *
      * @todo   Add support for multiple encodings
-     * @access public
      *
      * @param string $from XML root element name or DomDocument object with XML-data
      */
@@ -91,7 +88,6 @@ class Xml
     /**
      * Checks if strings is valid as XML node name.
      *
-     * @access public
      *
      * @param string $node Node name
      *
@@ -112,7 +108,6 @@ class Xml
     /**
      * Returns XML data as string.
      *
-     * @access public
      *
      * @return string
      */
@@ -136,7 +131,6 @@ class Xml
      *
      * $object parameter can also be an array but array keys must be strings.
      *
-     * @access  public
      *
      * @param object $object XMLVars object or array
      * @param bool   $cdata  Defines if we create CDATA section to XMLtree
@@ -154,7 +148,7 @@ class Xml
             }
 
             if ($object instanceof DomDocument) {
-                $object = new Xml($object);
+                $object = new self($object);
             }
 
             if ($object instanceof \Libvaloa\Xml\Xml) {
@@ -181,7 +175,7 @@ class Xml
 
         $xml = new DomDocument();
         $xml->load($file);
-        $xml = new Xml($xml);
+        $xml = new self($xml);
 
         return $path ? $xml->toObject($path) : $xml;
     }
@@ -198,7 +192,7 @@ class Xml
     {
         $xml = new DomDocument();
         $xml->loadXML($string);
-        $xml = new Xml($xml);
+        $xml = new self($xml);
 
         return $path ? $xml->toObject($path) : $xml;
     }
@@ -207,7 +201,6 @@ class Xml
      * Parses object or array and converts it to XML.
      *
      * @todo   Validate $key (would it create too much overhead?)
-     * @access private
      *
      * @param object $obj   Object to parse. In theory arrays will work if keys are not integers.
      * @param object $top   Toplevel DOM object
@@ -251,7 +244,6 @@ class Xml
     /**
      * Parses XML and converts it to object.
      *
-     * @access private
      *
      * @param string   $path  XPath to XML element to return as object
      * @param DomXPath $xpath DomXPath object from current DomDocument
@@ -272,7 +264,7 @@ class Xml
         if ($items->length > 1) {
             $retval = array();
             foreach ($items as $k => $item) {
-                array_push($retval, $this->nodeToObject("{$path}[".($k+1).']', $xpath));
+                array_push($retval, $this->nodeToObject("{$path}[".($k + 1).']', $xpath));
             }
         } else {
             $retval = new stdClass();
@@ -286,7 +278,7 @@ class Xml
                 $tmp = $xpath->query("{$path}/{$item->nodeName}/*");
                 if ($tmp->length > 0) {
                     if (isset($retval->{$item->nodeName})) {
-                        $count = count($retval->{$item->nodeName})+1;
+                        $count = count($retval->{$item->nodeName}) + 1;
                         array_push($retval->{$item->nodeName}, $this->nodeToObject("{$path}/{$item->nodeName}[{$count}]", $xpath));
                     } else {
                         $retval->{$item->nodeName} = $this->nodeToObject("{$path}/{$item->nodeName}[1]", $xpath);
@@ -316,7 +308,6 @@ class Xml
     /**
      * self to string conversion.
      *
-     * @access public
      *
      * @return string XML data as string
      */

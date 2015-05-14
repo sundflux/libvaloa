@@ -30,7 +30,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-
 namespace Libvaloa\Db;
 
 use PDO;
@@ -48,7 +47,6 @@ class Db
     /**
      * Instance of PDO.
      *
-     * @access private
      *
      * @var PDO
      */
@@ -57,7 +55,6 @@ class Db
     /**
      * Amount of not commited/rollbacked transactions started with beginTrans().
      *
-     * @access private
      *
      * @var int
      */
@@ -67,7 +64,6 @@ class Db
      * Number of SQL queries executed.
      *
      * @static
-     * @access public
      *
      * @var int
      */
@@ -84,7 +80,6 @@ class Db
     /**
      * Constructor opens connection to database using PDO.
      *
-     * @access public
      *
      * @param string $server   SQL server. defaults to localhost
      * @param string $user     Username at SQL server
@@ -162,7 +157,6 @@ class Db
      *
      * Currently supported is transCnt.
      *
-     * @access public
      *
      * @param string $k
      *
@@ -182,7 +176,6 @@ class Db
     /**
      * Executes SQL query and returns results in DB_ResultSet object.
      *
-     * @access public
      *
      * @param string $query SQL query
      *
@@ -212,7 +205,6 @@ class Db
      * strings to database. It is also usefull when you need to make same
      * query multiple times with different values.
      *
-     * @access public
      *
      * @param string $query SQL query
      *
@@ -245,7 +237,6 @@ class Db
      * it just returns the amount of affected rows and thus is slightly
      * faster when doing INSERT, UPDATE etc queries.
      *
-     * @access public
      *
      * @param string $query SQL query
      *
@@ -298,7 +289,6 @@ class Db
     /**
      * Begins database transaction if database supports it.
      *
-     * @access public
      *
      * @uses   Common_Exception
      */
@@ -315,7 +305,6 @@ class Db
     /**
      * Commits transaction started with beginTrans().
      *
-     * @access public
      *
      * @param bool $ok If false, method automatically calls rollBack() and transaction is not committed
      */
@@ -339,8 +328,6 @@ class Db
 
     /**
      * Cancels transaction started with beginTrans().
-     *
-     * @access public
      */
     public function rollBack()
     {
@@ -392,7 +379,6 @@ class ResultSet implements Iterator
     /**
      * Constructor.
      *
-     * @access public
      *
      * @param PDOStatement $stmt     Statement from DB
      * @param bool         $executed If true, rows are read automatically
@@ -420,7 +406,6 @@ class ResultSet implements Iterator
      *
      * Currently supports fields array and EOF boolean.
      *
-     * @access public
      *
      * @return mixed
      */
@@ -506,7 +491,6 @@ class ResultSet implements Iterator
      *
      * After this, you can use resultset as you would have called it via DB::execute().
      *
-     * @access public
      *
      * @uses   DB
      */
@@ -539,7 +523,6 @@ class ResultSet implements Iterator
     /**
      * Returns current row as an stdClass object and moves pointer to next row.
      *
-     * @access public
      *
      * @return mixed stdClass or false if there are no rows
      */

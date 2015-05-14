@@ -30,7 +30,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-
 namespace Libvaloa;
 
 class Debugtimer
@@ -49,7 +48,6 @@ class Debugtimer
     /**
      * Starts counter by storing current microtime to $startTime variable.
      *
-     * @access public
      *
      * @return float Current microtime
      */
@@ -75,7 +73,6 @@ class Debugtimer
      * Stops counter and returns benchmark in seconds from the
      * time libvaloa environment was started.
      *
-     * @access public
      *
      * @param int $decimals number of decimals in benchmark time
      *
@@ -90,7 +87,6 @@ class Debugtimer
     /**
      * Stops counter and returns benchmark in seconds.
      *
-     * @access public
      *
      * @param int $decimals number of decimals in benchmark time
      *

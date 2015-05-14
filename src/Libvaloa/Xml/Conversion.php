@@ -63,7 +63,6 @@
  * $convert->addStylesheet($styles);
  * echo $convert->toString();
  */
-
 namespace Libvaloa\Xml;
 
 use stdClass;
@@ -497,7 +496,7 @@ class Conversion
             $retval = array();
 
             foreach ($items as $k => $item) {
-                array_push($retval, $this->handleNode("{$path}[".($k+1).']', $xpath));
+                array_push($retval, $this->handleNode("{$path}[".($k + 1).']', $xpath));
             }
         } else {
             $retval = new stdClass();

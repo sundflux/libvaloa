@@ -36,7 +36,6 @@
  *
  * Allows creating any kind of (text) output using XML and XSL styles.
  */
-
 namespace Libvaloa\Xml;
 
 use RuntimeException;
@@ -66,7 +65,6 @@ class Xsl
     /**
      * Adds XSL file to list of files to include.
      *
-     * @access public
      *
      * @param mixed $files   Filename with path or array of files
      * @param bool  $prepend If true, file(s) are put to the top of xsl file stack
@@ -153,7 +151,6 @@ class Xsl
      * Creates XSL stylesheet and parses XML+XSL using XsltProcessor.
      *
      * @todo   Allow changing of encoding
-     * @access public
      *
      * @param DomDocument $xmldom XML-data as DomDocument
      *
@@ -182,7 +179,6 @@ class Xsl
     /**
      * self to string conversion.
      *
-     * @access public
      *
      * @return string Parsed data as string
      */

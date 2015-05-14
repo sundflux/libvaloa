@@ -36,7 +36,6 @@
  *
  * @uses       Xml_Xsl
  */
-
 namespace Libvaloa\Ui;
 
 use stdClass;
@@ -48,8 +47,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     public $issetpageroot = false;
 
     /**
-     * @access private
-     *
      * @var DOMElement 'pageroot' which can be anything. Default is 'index'
      */
     private $page;
@@ -80,7 +77,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * Constructor.
      *
-     * @access public
      *
      * @param mixed $root XML page root. Default is 'page' and you
      *                    shouldn't change this
@@ -126,7 +122,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * Tip: You can gain a minimal speed increase if you set your page
      *      root before adding XML.
      *
-     * @access public
      *
      * @param string $root Pageroot node name
      *
@@ -162,7 +157,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * $object parameter can also be an array but array keys must be strings.
      *
      * @todo    Validate $object
-     * @access  public
      *
      * @param object $object XMLVars object
      * @param bool   $cdata  Defines if we create CDATA section to XMLtree
@@ -206,7 +200,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * Adds common XML data and returns XSL parser output.
      *
      * @param bool $asxml If true, return value will be XML
-     * @access public
      *
      * @uses   Xml_Read
      */
@@ -215,11 +208,9 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         $xml = new stdClass();
 
         // Error messages to XML
-        if (session_status() == PHP_SESSION_NONE) {
-            if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])) {
-                $xml->messages = $_SESSION['messages'];
-                unset($_SESSION['messages']);
-            }
+        if (isset($_SESSION['messages']) && !empty($_SESSION['messages'])) {
+            $xml->messages = $_SESSION['messages'];
+            unset($_SESSION['messages']);
         }
 
         // Page requisites
@@ -246,7 +237,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         $this->dom->firstChild->appendChild($module);
 
         try {
-            $retval = $this->asxml ? Xml::toString() : $this->xsl->parse($this->dom);
+            $retval = $this->asxml ? self::toString() : $this->xsl->parse($this->dom);
         } catch (Exception $e) {
             Debug::__print($e->getMessage());
             $retval = false;
@@ -261,7 +252,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * 'Main' XSL means the root XSL template. If/when found, it is added to list of
      * XSL files to include.
      *
-     * @access public
      *
      * @return bool
      */
@@ -281,7 +271,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * Add javascript to be included in XHTML.
      *
-     * @access public
      *
      * @param string $file   Javascript file
      * @param mixed  $module False to search JS-file from current module and
@@ -298,7 +287,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      *
      * File is first looked from theme directory and then from default css directory.
      *
-     * @access public
      *
      * @param string $name   CSS filename
      * @param mixed  $module False to search CSS-file from current module and
@@ -330,7 +318,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * directory. If module name was not specified or $module was set to true,
      * method also looks up the file in theme directories.
      *
-     * @access public
      *
      * @param string $name   XSL-filename without .xsl suffix
      * @param mixed  $module False to search XSL-file from current module and
@@ -360,7 +347,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * Add a error to session.
      *
-     * @access public
      *
      * @param mixed $message Error message or array of errors
      */
@@ -372,7 +358,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * Add a notice to session.
      *
-     * @access public
      *
      * @param mixed $message Error message or array of errors
      */
@@ -384,7 +369,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * Add a success to session.
      *
-     * @access public
      *
      * @param mixed $message Error message or array of errors
      */
@@ -396,7 +380,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * Add a message to session.
      *
-     * @access public
      *
      * @param mixed  $message Message or array of message strings
      * @param string $class   Tells XSL/CSS which type of message this is
@@ -422,6 +405,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
             $msgObj->type = $class;
             $_SESSION['messages'][] = $msgObj;
         }
+
+        Debug::__print($_SESSION['messages']);
     }
 
     public function preProcessTemplate()
@@ -463,7 +448,6 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     /**
      * self to string conversion.
      *
-     * @access public
      *
      * @return string XHTML output
      */

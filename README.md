@@ -53,12 +53,14 @@ Libvaloa is licensed under the MIT License - see the LICENSE file for details.
 
 ## Change Log
 All notable changes to this project will be documented in this file.
+
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-### [1.0.1] - 2015-05-xx
+### [1.0.1] - 2015-05-14
 #### Fixed
-- Libvaloa\Debug: Debug prints should output only when error level is E_ALL
+- Libvaloa\Debug: Debug prints should output only when error level is E_ALL.
+- Libvaloa\Ui\Xml: Fix session_status() check in addMessage().
 
 ### [1.0.0] - 2015-05-12
-#### Changed
+#### Added
 - Initial release with stable API.
