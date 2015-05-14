@@ -52,9 +52,8 @@ use stdClass;
  * Debug::__print('Hello world');
  * </code>
  *
- * The debug message will print out at end of the page, together with 
+ * The debug message will print out at end of the page, together with
  * memory usage and execution time.
- * 
  */
 class Debug
 {
