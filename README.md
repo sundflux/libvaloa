@@ -7,7 +7,7 @@ Libvaloa is a small utility library for generating HTML user interfaces using XM
 
 In addition to reference XSL+XML implementation, the UI Interface can be hooked to alternative template engines.
 
-http://www.libvaloa.com/
+http://libvaloa.webvaloa.com/
 
 ## Installation
 
@@ -25,7 +25,7 @@ or include libvaloa in your composer.json
 
 ## Requirements
 
-- PHP 5.4 or newer. Also tested on HHVM 3.6.
+- PHP 5.6 or newer.
 - XSL support enabled (Debian/Ubuntu: php5-xsl package).
 - DOM support enabled (enabled by default).
 
@@ -42,19 +42,24 @@ or include libvaloa in your composer.json
 
 ## Copyright and license
 
-Copyright (C) 2004 - 2014 Tarmo Alexander Sundström & contributors.
+Copyright (C) 2004 - 2017 Tarmo Alexander Sundström & contributors.
 
 Libvaloa is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact
 
 - ta@sundstrom.io
-- http://www.libvaloa.com/
+- http://libvaloa.webvaloa.com/
 
 ## Change Log
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+### [1.1.0] - 2017-07-xx
+#### Fixed
+- Updated project urls
+- 
 
 ### [1.0.1] - 2015-05-14
 #### Fixed
@@ -64,3 +69,4 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### [1.0.0] - 2015-05-12
 #### Added
 - Initial release with stable API.
+
