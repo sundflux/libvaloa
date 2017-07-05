@@ -67,6 +67,7 @@
  */
 namespace Libvaloa\Xml;
 
+use Libvaloa\Debug;
 use stdClass;
 use DomDocument;
 use DomAttr;

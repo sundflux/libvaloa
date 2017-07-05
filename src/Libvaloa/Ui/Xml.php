@@ -38,6 +38,7 @@
  */
 namespace Libvaloa\Ui;
 
+use Libvaloa\Xml\Conversion;
 use stdClass;
 use Libvaloa\Debug;
 use Libvaloa\Xml\Xsl as Xsl;
@@ -174,7 +175,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
             $this->objectToNode($object, $key, $cdata);
             $this->dom->firstChild->appendChild($key);
         } else {
-            $this->objectToNode($object, $this->page, $cdata);
+            $conversion = new Conversion($object);
+            $conversion->objectToDomElement($object, $this->page, $this->dom);
         }
     }
 
@@ -235,6 +237,10 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         $module = $this->dom->createElement('module');
         $module->appendChild($this->page);
         $this->dom->firstChild->appendChild($module);
+
+        if (error_reporting() === E_ALL) {
+            Debug::__print(htmlspecialchars(self::toString()));
+        }
 
         try {
             $retval = $this->asxml ? self::toString() : $this->xsl->parse($this->dom);

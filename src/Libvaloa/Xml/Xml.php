@@ -80,7 +80,14 @@ class Xml
             $this->dom = new DomDocument('1.0', 'utf-8');
             $this->dom->preserveWhiteSpace = false;
             $this->dom->resolveExternals = false;
-            $this->dom->formatOutput = false;
+
+            // Format output when in debug mode
+            if (error_reporting() === E_ALL) {
+                $this->dom->formatOutput = true;
+            } else {
+                $this->dom->formatOutput = false;
+            }
+
             $this->dom->appendChild($this->dom->createElement($from));
         }
     }
