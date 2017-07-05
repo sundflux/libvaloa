@@ -60,9 +60,14 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 #### Fixed
 - Updated project urls.
 - Code cleanups for Xml/Conversion.
+
+#### Added
 - Xml/Conversion now exposes more private methods as public.
 - Xml/Xsl now uses Xml/Conversion instead of doing direct transformation
+- Xml/Xml now uses Xml/Conversion when including view data with addObject. 
+- Attributes are now possible from the UI since we use Xml/Conversion
 - Updated PHP requirement to 5.6 to simplify maintainance.
+- Memory requirements are slightly higher after Xml/Conversion migration.
 
 ### [1.0.1] - 2015-05-14
 #### Fixed
