@@ -58,8 +58,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### [1.1.0] - 2017-07-xx
 #### Fixed
-- Updated project urls
-- 
+- Updated project urls.
+- Code cleanups for Xml/Conversion.
+- Xml/Conversion now exposes more private methods as public.
 
 ### [1.0.1] - 2015-05-14
 #### Fixed
