@@ -128,6 +128,26 @@ class Conversion
     }
 
     /**
+     * Checks if strings is valid as XML node name.
+     *
+     *
+     * @param string $node Node name
+     *
+     * @return bool True if string can be used as node name, otherwise false.
+     */
+    public static function validateNodeName($node)
+    {
+        if (empty($node)
+            || is_numeric(substr($node, 0, 1))
+            || substr(strtolower($node), 0, 3) === 'xml'
+            || strstr($node, ' ')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @todo should we catch exceptions and return error string?
      */
     public function __toString()
@@ -413,12 +433,12 @@ class Conversion
      *
      * @return DomDocument
      */
-    private function objectToDom($obj)
+    public function objectToDom($obj)
     {
         $doc = new DomDocument('1.0', 'utf-8');
 
         foreach ($obj as $k => &$v) {
-            $node = $this->handleObject($v, $doc->createElement($k), $doc);
+            $node = $this->objectToDomElement($v, $doc->createElement($k), $doc);
             break;
         }
 
@@ -434,7 +454,7 @@ class Conversion
      * @param DomNode     $node
      * @param DomDocument $doc  Root document
      */
-    private function handleObject($obj, DomNode $node, DomDocument $doc)
+    public function objectToDomElement($obj, DomNode $node, DomDocument $doc)
     {
         if (isset($obj->__cdata)) {
             $node->appendChild($doc->createCDATASection($obj->__cdata));
@@ -448,7 +468,7 @@ class Conversion
                     $e = $doc->createElement($key);
 
                     if (is_object($v)) {
-                        $this->handleObject($v, $e, $doc);
+                        $this->objectToDomElement($v, $e, $doc);
                     } elseif ($v !== null) {
                         $e->appendChild($doc->createTextNode((string) $v));
                     }
@@ -463,7 +483,7 @@ class Conversion
                 }
                 continue;
             } elseif (is_object($val)) {
-                $e = $this->handleObject($val, $doc->createElement($key), $doc);
+                $e = $this->objectToDomElement($val, $doc->createElement($key), $doc);
             } elseif ($val !== null) {
                 $e = $doc->createElement($key);
                 $e->appendChild($doc->createTextNode($val));
@@ -483,9 +503,9 @@ class Conversion
         return $node;
     }
 
-    private function domToObject($dom)
+    public function domToObject($dom)
     {
-        return $this->handleNode('/*', new DomXPath($dom));
+        return $this->processNode('/*', new DomXPath($dom));
     }
 
     /**
@@ -493,7 +513,7 @@ class Conversion
      * @todo more testing and optimize?
      * @todo support for simplexml
      */
-    private function handleNode($path, $xpath = false)
+    private function processNode($path, $xpath = false)
     {
         $items = $xpath->query("{$path}");
 
@@ -505,7 +525,7 @@ class Conversion
             $retval = array();
 
             foreach ($items as $k => $item) {
-                array_push($retval, $this->handleNode("{$path}[".($k + 1).']', $xpath));
+                array_push($retval, $this->processNode("{$path}[".($k + 1).']', $xpath));
             }
         } else {
             $retval = new stdClass();
@@ -521,9 +541,9 @@ class Conversion
                 if ($tmp->length > 0) {
                     if (isset($retval->{$item->nodeName})) {
                         $count = count($retval->{$item->nodeName}) + 1;
-                        array_push($retval->{$item->nodeName}, $this->handleNode("{$path}/{$item->nodeName}[{$count}]", $xpath));
+                        array_push($retval->{$item->nodeName}, $this->processNode("{$path}/{$item->nodeName}[{$count}]", $xpath));
                     } else {
-                        $retval->{$item->nodeName} = $this->handleNode("{$path}/{$item->nodeName}[1]", $xpath);
+                        $retval->{$item->nodeName} = $this->processNode("{$path}/{$item->nodeName}[1]", $xpath);
                     }
                 } else {
                     if (isset($retval->{$item->nodeName})) {
