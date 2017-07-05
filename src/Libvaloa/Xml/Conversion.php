@@ -388,6 +388,8 @@ class Conversion
             if (!$v instanceof DomDocument) {
                 $dom = new DomDocument();
                 $dom->load($v);
+            } else {
+                $dom = $v;
             }
 
             if ($dom->firstChild->nodeName === 'xsl:stylesheet') {
