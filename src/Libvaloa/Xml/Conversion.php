@@ -10,7 +10,9 @@
  * All Rights Reserved.
  *
  * Contributor(s):
- * 2014 Tarmo Alexander Sundström <ta@sundstrom.im>
+ * 2010 Tarmo Alexander Sundström <ta@sundstrom.io>
+ * 2014 Tarmo Alexander Sundström <ta@sundstrom.io>
+ * 2017 Tarmo Alexander Sundström <ta@sundstrom.io>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -79,8 +81,14 @@ use InvalidArgumentException;
 class Conversion
 {
     private $source; // source data
-    private $is;     // type of the source data as int
+    private $sourceType; // type of the source data as int
     private $styles = array(); // paths to xsl stylesheets
+    
+    const SOURCE_TYPE_DOM = 0;
+    const SOURCE_TYPE_SIMPLEXML = 1;
+    const SOURCE_TYPE_OBJECT = 2;
+    const SOURCE_TYPE_FILE = 3;
+    const SOURCE_TYPE_STRING = 4;
 
     /**
      * Constructor takes the source XML as parameter.
@@ -94,27 +102,28 @@ class Conversion
     public function __construct(&$source)
     {
         if ($source instanceof DomDocument) {
-            $this->is = 0;
+            $this->sourceType = self::SOURCE_TYPE_DOM;
         } elseif ($source instanceof SimpleXMLElement) {
             if (!class_exists('SimpleXMLElement')) {
                 throw new BadMethodCallException('Can not parse XML from SimpleXMLElement. SimpleXML extension is missing.');
             }
 
-            $this->is = 1;
+            $this->sourceType = self::SOURCE_TYPE_SIMPLEXML;
         } elseif (is_object($source) || is_array($source)) {
-            $this->is = 2;
+            $this->sourceType = self::SOURCE_TYPE_OBJECT;
 
             // only the first element of array/object is used
             // because xml can have only one root element.
             // @todo remove other elements but first
         } elseif (is_file($source)) {
-            $this->is = 3;
+            $this->sourceType = self::SOURCE_TYPE_FILE;
         } elseif (is_string($source) && !empty($source)) {
             // @todo validation, charset selection
-            $this->is = 4;
+            $this->sourceType = self::SOURCE_TYPE_STRING;
         } else {
             throw new InvalidArgumentException('XML source is invalid.');
         }
+
         $this->source = $source;
     }
 
@@ -145,11 +154,11 @@ class Conversion
         }
 
         // source parsing if needed
-        switch ($this->is) {
-            case 0:
+        switch ($this->sourceType) {
+            case self::SOURCE_TYPE_DOM:
                 $dom = $this->source;
                 break;
-            case 1:
+            case self::SOURCE_TYPE_SIMPLEXML:
                 if (!isset($proc)) {
                     return $this->source->asXML();
                 }
@@ -187,8 +196,8 @@ class Conversion
             $proc->registerPhpFunctions();
         }
 
-        switch ($this->is) {
-            case 0:
+        switch ($this->sourceType) {
+            case self::SOURCE_TYPE_DOM:
                 if ($this->source instanceof DomDocument) {
                     return $this->source;
                 }
@@ -199,7 +208,7 @@ class Conversion
                 $dom->appendChild($dome);
 
                 return $dom;
-            case 1:
+            case self::SOURCE_TYPE_SIMPLEXML:
                 // @todo detect charset from simplexml?
                 $dom = new DomDocument('1.0', 'utf-8');
                 $dome = dom_import_simplexml($this->source);
@@ -207,14 +216,14 @@ class Conversion
                 $dom->appendChild($dome);
 
                 return $dom;
-            case 2:
+            case self::SOURCE_TYPE_OBJECT:
                 $dom = $this->objectToDom($this->source);
                 break;
-            case 3:
+            case self::SOURCE_TYPE_FILE:
                 $dom = new DomDocument();
                 $dom->load($this->source);
                 break;
-            case 4:
+            case self::SOURCE_TYPE_STRING:
                 $dom = new DomDocument();
                 $dom->loadXML($this->source);
         }
@@ -241,18 +250,18 @@ class Conversion
             return simplexml_import_dom($dom);
         }
 
-        switch ($this->is) {
-            case 0:
+        switch ($this->sourceType) {
+            case self::SOURCE_TYPE_DOM:
                 return simplexml_import_dom($this->source);
-            case 1:
+            case self::SOURCE_TYPE_SIMPLEXML:
                 return $this->source;
-            case 2:
+            case self::SOURCE_TYPE_OBJECT:
                 $dom = $this->objectToDom($this->source);
 
                 return simplexml_import_dom($dom);
-            case 3:
+            case self::SOURCE_TYPE_FILE:
                 return simplexml_load_file($this->source);
-            case 4:
+            case self::SOURCE_TYPE_STRING:
                 return simplexml_load_string($this->source);
         }
     }
@@ -269,7 +278,7 @@ class Conversion
      */
     public function toObject($applystyles = true)
     {
-        if ($this->is === 2 && (!$applystyles || empty($this->styles))) {
+        if ($this->sourceType === 2 && (!$applystyles || empty($this->styles))) {
             return $this->source;
         }
 
