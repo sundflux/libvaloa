@@ -298,7 +298,7 @@ class Conversion
      */
     public function toObject($applystyles = true)
     {
-        if ($this->sourceType === 2 && (!$applystyles || empty($this->styles))) {
+        if ($this->sourceType === self::SOURCE_TYPE_OBJECT && (!$applystyles || empty($this->styles))) {
             return $this->source;
         }
 
