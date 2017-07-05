@@ -25,8 +25,8 @@ or include libvaloa in your composer.json
 
 ## Requirements
 
-- PHP 5.6 or newer.
-- XSL support enabled (Debian/Ubuntu: php5-xsl package).
+- PHP 5.6 or newer (PHP 7.0+ recommended).
+- XSL support enabled (Ubuntu 14.04 package: php5-xsl, Ubuntu 16.04 package: php7.0-xml).
 - DOM support enabled (enabled by default).
 
 ## Features
@@ -61,6 +61,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Updated project urls.
 - Code cleanups for Xml/Conversion.
 - Xml/Conversion now exposes more private methods as public.
+- Xml/Xsl now uses Xml/Conversion instead of doing direct transformation
+- Updated PHP requirement to 5.6 to simplify maintainance.
 
 ### [1.0.1] - 2015-05-14
 #### Fixed

@@ -5,7 +5,7 @@
  * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
- * Copyright (C) 2004,2014 Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Copyright (C) 2004,2014,2017 Tarmo Alexander Sundström <ta@sundstrom.im>
  *
  * All Rights Reserved.
  *
@@ -40,7 +40,6 @@ namespace Libvaloa\Xml;
 
 use RuntimeException;
 use DomDocument;
-use XsltProcessor;
 
 class Xsl
 {
@@ -94,32 +93,7 @@ class Xsl
      */
     public function preProcessTemplate()
     {
-        foreach ($this->xslfiles as $primary => $v) {
-            $templateDom = new DomDocument();
-            $templateDom->load($v, LIBXML_COMPACT);
-
-            if ($templateDom->firstChild->nodeName === 'xsl:stylesheet') {
-                break;
-            }
-
-            unset($primary);
-        }
-
-        if (!isset($primary)) {
-            throw new RuntimeException('No valid XML stylesheets were found for XSLT parser.');
-        }
-
-        foreach ($this->xslfiles as $k => $v) {
-            if ($k === $primary) {
-                continue;
-            }
-
-            $include = $templateDom->createElementNS('http://www.w3.org/1999/XSL/Transform', 'xsl:include');
-            $include->setAttributeNode(new \DomAttr('href', $v));
-            $templateDom->firstChild->appendChild($include);
-        }
-
-        $this->setPreProcessedTemplateDom($templateDom);
+        return $this->setPreProcessedTemplateDom(Conversion::stylesToDOM($this->xslfiles));
     }
 
     /**
@@ -148,7 +122,7 @@ class Xsl
     }
 
     /**
-     * Creates XSL stylesheet and parses XML+XSL using XsltProcessor.
+     * Creates XSL stylesheet and parses XML+XSL using Xml/Conversion.
      *
      * @todo   Allow changing of encoding
      *
@@ -157,7 +131,6 @@ class Xsl
      * @return string Parsed data as string
      *
      * @uses   DomDocument
-     * @uses   XsltProcessor
      */
     public function parse($xmldom)
     {
@@ -165,15 +138,11 @@ class Xsl
             $this->preProcessTemplate();
         }
 
-        $proc = new XsltProcessor();
-        $proc->importStylesheet($this->getPreProcessedTemplateDom());
+        $conversion = new Conversion($xmldom);
+        $styles[0] = $this->getPreProcessedTemplateDom();
+        $conversion->addStylesheet($styles);
 
-        // Allow PHP functions from XSL templates
-        if ($this->properties['enablePhpFunctions'] == 1) {
-            $proc->registerPhpFunctions();
-        }
-
-        return (string) $proc->transformToXML($xmldom);
+        return (string) $conversion->toString();
     }
 
     /**
