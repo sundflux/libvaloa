@@ -472,7 +472,7 @@ class Conversion
 
                     if (is_object($v)) {
                         $this->objectToDomElement($v, $e, $doc);
-                    } elseif ($v !== null) {
+                    } elseif (is_string($v) && !empty($v)) {
                         $e->appendChild($doc->createTextNode((string) $v));
                     }
 

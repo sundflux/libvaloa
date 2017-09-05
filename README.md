@@ -56,6 +56,9 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+### [1.1.1] - 2017-09-05
+- Fixes Array to string crash from Xml/Conversion.php
+
 ### [1.1.0] - 2017-07-05
 #### Fixed
 - Updated project urls.
