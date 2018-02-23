@@ -227,7 +227,7 @@ class Object
             $this->data->{$this->primaryKey} = null;
         }
 
-        $fields = $values = $updates = '';
+        $fields = array();
         foreach ($this->data as $key => $val) {
             $fields[$key] = '?';
         }
