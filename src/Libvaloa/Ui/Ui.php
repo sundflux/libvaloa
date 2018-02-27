@@ -32,6 +32,10 @@
  */
 namespace Libvaloa\Ui;
 
+/**
+ * Interface Ui
+ * @package Libvaloa\Ui
+ */
 interface Ui
 {
     /**

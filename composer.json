@@ -9,11 +9,12 @@
         {
             "name": "Tarmo Alexander Sundstrom",
             "email": "ta@sundstrom.io",
-            "homepage": "http://www.libvaloa.com"
+            "homepage": "http://www.webvaloa.com"
         }
     ],
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=5.6.0",
+	"gettext/gettext": "^4.4"
     },
     "autoload": {
         "psr-4": {"Libvaloa\\": "src/Libvaloa"}

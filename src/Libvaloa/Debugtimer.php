@@ -39,9 +39,19 @@ namespace Libvaloa;
  */
 class Debugtimer
 {
+    /**
+     * @var
+     */
     private $startTime;
+
+    /**
+     * @var
+     */
     private $startMem;
 
+    /**
+     * Debugtimer constructor.
+     */
     public function __construct()
     {
         $this->startCounter();

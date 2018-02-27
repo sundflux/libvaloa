@@ -5,7 +5,7 @@
  * Tarmo Alexander Sundström <ta@sundstrom.im>.
  *
  * Portions created by the Initial Developer are
- * Copyright (C) 2014 Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Copyright (C) 2018 Tarmo Alexander Sundström <ta@sundstrom.im>
  *
  * All Rights Reserved.
  *
@@ -33,11 +33,13 @@
 
 namespace Libvaloa\I18n\Translate;
 
+use Libvaloa\Debug;
+
 /**
- * Class Ini
+ * Class Gettext
  * @package Libvaloa\I18n\Translate
  */
-class Ini
+class Gettext
 {
     /**
      * @var
@@ -70,10 +72,24 @@ class Ini
      */
     public function bindTextDomain($domain, $path = '')
     {
-        $file = $path.'/'.getenv('LANG').'/LC_MESSAGES/'.$domain.'.ini';
+        $file = $path.'/'.getenv('LANG').'/LC_MESSAGES/'.$domain.'.po';
 
-        if (file_exists($file)) {
-            $this->translations = parse_ini_file($file);
+        if (!file_exists($file)) {
+            return false;
+        }
+
+        try {
+            $translations = \Gettext\Translations::fromPoFile($file);
+            $translation = $translations->find(null, $this->source);
+
+            if ($translation === false) {
+                throw new \RuntimeException('Translation not found');
+            }
+
+            $this->translations[$this->source] = $translation->getTranslation();
+        } catch(\Exception $e) {
+            Debug::__print('Loading translation failed.');
+            Debug::__print($e->getMessage());
         }
     }
 
@@ -82,11 +98,9 @@ class Ini
      */
     public function translate()
     {
-        if (isset($this->translations[$this->translated])) {
-            return $this->translations[$this->translated];
-        }
+        Debug::__print($this->translations[$this->source]);
 
-        return $this->translated;
+        return $this->translations[$this->source];
     }
 
     /**

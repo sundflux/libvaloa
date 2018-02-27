@@ -32,31 +32,80 @@
  */
 namespace Libvaloa\I18n;
 
+use Libvaloa\Debug;
+
+/**
+ * Class Translate
+ * @package Libvaloa\I18n
+ */
 class Translate
 {
-    private $translated;
-    private $domain;
+    /**
+     * @var
+     */
+    public $translated;
 
+    /**
+     * @var
+     */
+    public $domain;
+
+    /**
+     * @var array
+     */
     public static $properties = array(
         'backend' => 'Ini',
     );
 
-    public function __construct($params)
+    /**
+     * Translate constructor.
+     * @param array $params
+     */
+    public function __construct($params = false)
     {
+        if (!empty($params) && is_array($params)) {
+            if (isset($params['backend'])) {
+                self::$properties['backend'] = $params['backend'];
+                unset($params['backend']);
+            }
+        }
+
+        Debug::__print('Translator with backend ' .  self::$properties['backend']);
+
+        if ($params === false || !is_array($params)) {
+            $params = [];
+
+            Debug::__print('Warning: Translator excepts parameters as an Array, parameters were discarded');
+        }
+        Debug::__print($params);
+
+        self::$properties['backend'] = 'Gettext';
+
         $backend = '\Libvaloa\I18n\Translate\\'.self::$properties['backend'];
+
         $this->backend = new $backend($params);
     }
 
+    /**
+     * @param $domain
+     * @param bool $path
+     */
     public function bindTextDomain($domain, $path = false)
     {
         $this->backend->bindTextDomain($domain, $path);
     }
 
+    /**
+     * @return mixed
+     */
     public function translate()
     {
         return $this->backend->translate();
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return (string) $this->translate();

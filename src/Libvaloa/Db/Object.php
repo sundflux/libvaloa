@@ -37,14 +37,45 @@ use stdClass;
 use InvalidArgumentException;
 use OutOfBoundsException;
 
+/**
+ * Class Object
+ * @package Libvaloa\Db
+ */
 class Object
 {
+    /**
+     * @var bool
+     */
     private $db;
+
+    /**
+     * @var bool
+     */
     private $struct;
+
+    /**
+     * @var string
+     */
     private $primaryKey = 'id'; // name of the primary key field in table
+
+    /**
+     * @var bool
+     */
     private $lateload = false;
+
+    /**
+     * @var stdClass
+     */
     private $data;
+
+    /**
+     * @var bool
+     */
     private $modified = false;
+
+    /**
+     * @var bool
+     */
     private $columns = false;
 
     /**
@@ -88,6 +119,9 @@ class Object
         $this->data = (object) $columns;
     }
 
+    /**
+     *
+     */
     private function detectColumns()
     {
         // Columns already set
@@ -133,9 +167,8 @@ class Object
     }
 
     /**
-     * Get a column.
-     *
-     * @param string $field
+     * @param $field
+     * @return null|string
      */
     public function __get($field)
     {
@@ -153,10 +186,8 @@ class Object
     }
 
     /**
-     * Set a column.
-     *
-     * @param string $key
-     * @param string $value
+     * @param $key
+     * @param $value
      */
     public function __set($key, $value)
     {
@@ -181,9 +212,7 @@ class Object
     }
 
     /**
-     * Load row by ID.
-     *
-     * @param int $id
+     * @param $id
      */
     public function byID($id)
     {
@@ -211,7 +240,7 @@ class Object
     }
 
     /**
-     * Insert/update row.
+     *
      */
     public function save()
     {
@@ -272,7 +301,7 @@ class Object
     }
 
     /**
-     * Delete row.
+     *
      */
     public function delete()
     {

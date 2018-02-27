@@ -43,8 +43,15 @@ use stdClass;
 use Libvaloa\Debug;
 use Libvaloa\Xml\Xsl as Xsl;
 
+/**
+ * Class Xml
+ * @package Libvaloa\Ui
+ */
 class Xml extends \Libvaloa\Xml\Xml implements Ui
 {
+    /**
+     * @var bool
+     */
     public $issetpageroot = false;
 
     /**
@@ -52,14 +59,39 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      */
     private $page;
 
+    /**
+     * @var stdClass
+     */
     private $requisites;
+
+    /**
+     * @var
+     */
     private $mainxsl;
+
+    /**
+     * @var Xsl
+     */
     private $xsl;
+
+    /**
+     * @var bool
+     */
     private $asxml = false;
+
+    /**
+     * @var array
+     */
     private $paths = array();
 
+    /**
+     * @var array
+     */
     private $ignoreTemplates = array();
 
+    /**
+     * @var array
+     */
     public $properties = array(
         'route' => '',
         'basehref' => '',
@@ -91,6 +123,9 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         $this->requisites = new stdClass();
     }
 
+    /**
+     * @param string $paths
+     */
     public function addIncludePath($paths)
     {
         $paths = (array) $paths;
@@ -102,6 +137,9 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         }
     }
 
+    /**
+     * @return array
+     */
     public function getIncludePaths()
     {
         return $this->paths;
@@ -202,8 +240,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * Adds common XML data and returns XSL parser output.
      *
      * @param bool $asxml If true, return value will be XML
-     *
      * @uses   Xml_Read
+     * @return mixed
      */
     public function parse($asxml = false)
     {
@@ -351,10 +389,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     }
 
     /**
-     * Add a error to session.
-     *
-     *
-     * @param mixed $message Error message or array of errors
+     * @param string $message
+     * @return bool
      */
     public function addError($message)
     {
@@ -362,10 +398,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     }
 
     /**
-     * Add a notice to session.
-     *
-     *
-     * @param mixed $message Error message or array of errors
+     * @param string $message
+     * @return bool
      */
     public function addNotice($message)
     {
@@ -373,10 +407,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     }
 
     /**
-     * Add a success to session.
-     *
-     *
-     * @param mixed $message Error message or array of errors
+     * @param string $message
+     * @return bool
      */
     public function addSuccess($message)
     {
@@ -384,11 +416,9 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     }
 
     /**
-     * Add a message to session.
-     *
-     *
-     * @param mixed  $message Message or array of message strings
-     * @param string $class   Tells XSL/CSS which type of message this is
+     * @param string $message
+     * @param string $class
+     * @return bool
      */
     public function addMessage($message, $class = 'alert alert-info')
     {
@@ -415,6 +445,10 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         Debug::__print($_SESSION['messages']);
     }
 
+
+    /**
+     *
+     */
     public function preProcessTemplate()
     {
         $this->detectMainTemplate();
@@ -422,16 +456,26 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         return $this->xsl->preProcessTemplate();
     }
 
+    /**
+     * @return \DomDocument|DomDocument
+     */
     public function getPreProcessedTemplateDom()
     {
         return $this->xsl->getPreProcessedTemplateDom();
     }
 
+    /**
+     * @param DomDocument $v
+     */
     public function setPreProcessedTemplateDom($v)
     {
         return $this->xsl->setPreProcessedTemplateDom($v);
     }
 
+    /**
+     * @param string  $header
+     * @return string |void
+     */
     public function addHeader($header)
     {
         if (is_array($this->properties['headers']) && in_array($header, $this->properties['headers'])) {
@@ -441,11 +485,18 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
         return $this->properties['headers'][] = $header;
     }
 
+    /**
+     * @return array|mixed
+     */
     public function getHeaders()
     {
         return $this->properties['headers'];
     }
 
+    /**
+     * @param array  $headers
+     * @return array 
+     */
     public function setHeaders($headers)
     {
         return $this->properties['headers'] = $headers;
