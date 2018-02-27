@@ -5,7 +5,7 @@ libvaloa
 
 Libvaloa is a small utility library for generating HTML user interfaces using XML+XSL, mainly developed for Webvaloa. 
 
-In addition to reference XSL+XML implementation, the UI Interface can be hooked to alternative template engines.
+In addition to reference XSL+XML implementation, the UI Interface can be hooked to alternative template engines and the library contains lightweight database wrapper and resultset object handler for PDO, together with Gettext + Ini translations support.
 
 http://libvaloa.webvaloa.com/
 
@@ -38,7 +38,6 @@ or include libvaloa in your composer.json
 - Debugging helpers, including DOM debugger.
 - Localization interface.
 - Standards-compatible: PRS-1, PRS-2, PRS-4, verified and fixed with php-cs-fixer.
-- No external dependencies.
 
 ## Copyright and license
 
@@ -55,6 +54,17 @@ Libvaloa is licensed under the MIT License - see the LICENSE file for details.
 All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](http://semver.org/).
+
+Changes are grouped by added, fixed or changed feature.
+
+### [1.2.0] - 2018-02-27
+#### Added
+- Gettext translation support, \I18n\Translate\Gettext.
+- Composer dependency to Gettext/gettext.
+- More inline documentation.
+
+#### Changed
+- Separated Db\ResultSet to its own file.
 
 ### [1.1.2] - 2018-02-23
 - Fixes illegal string offset/missing array initializing in Db/Object.
