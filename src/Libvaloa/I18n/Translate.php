@@ -79,8 +79,6 @@ class Translate
         }
         Debug::__print($params);
 
-        self::$properties['backend'] = 'Gettext';
-
         $backend = '\Libvaloa\I18n\Translate\\'.self::$properties['backend'];
 
         $this->backend = new $backend($params);

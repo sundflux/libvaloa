@@ -57,6 +57,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
 
+### [1.2.1] - 2018-03-13
+#### Fixed
+- Gettext was always forced as default translator backend, oops
+
 ### [1.2.0] - 2018-02-27
 #### Added
 - Gettext translation support, \I18n\Translate\Gettext.
