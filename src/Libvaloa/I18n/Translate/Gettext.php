@@ -100,7 +100,11 @@ class Gettext
     {
         Debug::__print($this->translations[$this->source]);
 
-        return $this->translations[$this->source];
+        if (!empty($this->translations[$this->source])) {
+            return $this->translations[$this->source];
+        }
+
+        return $this->source;
     }
 
     /**

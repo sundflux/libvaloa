@@ -57,6 +57,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
 
+### [1.2.2] - 2018-03-21
+#### Fixed
+- Gettext now returns original string if translation is not found
+
 ### [1.2.1] - 2018-03-13
 #### Fixed
 - Gettext was always forced as default translator backend, oops
