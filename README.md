@@ -57,6 +57,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
 
+### [1.3.0] - 2018-03-22
+#### Added
+- Set and bind in Db\ResultSet now allow PDO type constants to be passed as a parameter.
+
 ### [1.2.3] - 2018-03-21
 #### Fixed
 - Readme fix.
