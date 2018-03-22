@@ -133,15 +133,16 @@ class ResultSet implements Iterator
     /**
      * @param $value
      * @param bool $key
+     * @param PDO::PARAM $type
      * @return $this
      */
-    public function set($value, $key = false)
+    public function set($value, $key = false, $type = PDO::PARAM_STR)
     {
         if ($this->stmt) {
             if (!$key) {
                 $key = $this->column++;
             }
-            $this->stmt->bindValue($key, $value);
+            $this->stmt->bindValue($key, $value, $type);
 
             return $this;
         }
@@ -152,53 +153,16 @@ class ResultSet implements Iterator
     /**
      * @param $value
      * @param bool $key
+     * @param PDO::PARAM $type
      * @return $this
      */
-    public function setLob($value, $key = false)
+    public function bind(&$value, $key = false, $type = PDO::PARAM_STR)
     {
         if ($this->stmt) {
             if (!$key) {
                 $key = $this->column++;
             }
-            $this->stmt->bindValue($key, $value, PDO::PARAM_LOB);
-
-            return $this;
-        }
-
-        throw new LogicException('Program attempted to set parameter to an executed SQL query.');
-    }
-
-    /**
-     * @param $value
-     * @param bool $key
-     * @return $this
-     */
-    public function bind(&$value, $key = false)
-    {
-        if ($this->stmt) {
-            if (!$key) {
-                $key = $this->column++;
-            }
-            $this->stmt->bindParam($key, $value);
-
-            return $this;
-        }
-
-        throw new LogicException('Program attempted to bind parameter to an executed SQL query.');
-    }
-
-    /**
-     * @param $value
-     * @param bool $key
-     * @return $this
-     */
-    public function bindLob($value, $key = false)
-    {
-        if ($this->stmt) {
-            if (!$key) {
-                $key = $this->column++;
-            }
-            $this->stmt->bindParam($key, $value, PDO::PARAM_LOB);
+            $this->stmt->bindParam($key, $value, $type);
 
             return $this;
         }
