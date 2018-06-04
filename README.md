@@ -57,6 +57,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
 
+### [2.0.0] - 2018-06-04
+#### Added
+- Rename Db\Object as Db\Item, this is necessary for PHP 7.2 compatibility (Object is now reserved word).
+
 ### [1.3.0] - 2018-03-22
 #### Added
 - Set and bind in Db\ResultSet now allow PDO type constants to be passed as a parameter.

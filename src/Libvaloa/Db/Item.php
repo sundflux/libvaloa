@@ -41,7 +41,7 @@ use OutOfBoundsException;
  * Class Object
  * @package Libvaloa\Db
  */
-class Object
+class Item
 {
     /**
      * @var bool
