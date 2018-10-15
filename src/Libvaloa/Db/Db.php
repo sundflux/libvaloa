@@ -277,6 +277,14 @@ class Db
             throw new DBException('Unable to retrieve identifier for last insert query.');
         }
     }
+    
+    /**
+     * @return string
+     */
+    public function quote($string, $parameterType=PDO::PARAM_STR)
+    {
+        return $this->conn->quote($string, $parameterType);
+    }
 
     /**
      *
