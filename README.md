@@ -59,6 +59,7 @@ Changes are grouped by added, fixed or changed feature.
 - Db package is now separated to its own component, Libvaloa-db. Libvaloa will only concentrate on XSL UI and related utilities.
 - Remove I18n package completely. There are better translation libs out there, so it doesn't really bring any value to Libvaloa.
 - Move all debug classes under Debug package. Effectively: Debug -> Debug\Debug, Debugtimer -> Debug\Debugtimer, Xml\DomDebug -> Debug\DomDebug.
+- Deprecate and remove Xml\Xml and fully concentrate on maintaining Xml\Conversion. Conversion is little more resource heavy than Xml\Xml, but basically Xml\Xml is redurant and doesn't do anything Conversion doesn't do.
 
 ### [2.0.0] - 2018-06-04
 #### Added
