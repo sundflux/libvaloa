@@ -42,15 +42,6 @@
  * It can also apply stylesheets to any of the previous inputs and output the
  * parsed data in any of these formats.
  *
- * This class is not for manipulating XML data. You have PHP DOM and SimpleXML for that.
- * This is only to easily convert between between previous formats and apply stylesheets.
- *
- * The most common usage ofcourse is to convert PHP objects to DomDocuments and vice versa.
- * This conversion works pretty much like the one in Xml-class but this class also supports
- * - attributes
- * - cdata (properly unlike Xml-class)
- * - ArrayAccess classes
- *
  * Example. This loads XML data from file, edits it using SimpleXML, applies stylesheets
  * and echoes the results:
  *
