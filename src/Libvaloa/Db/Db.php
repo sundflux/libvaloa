@@ -10,7 +10,7 @@
  * All Rights Reserved.
  *
  * Contributor(s):
- * 2008,2013,2018 Tarmo Alexander Sundström <ta@sundstrom.im>
+ * 2008,2013,2018 Tarmo Alexander Sundström <ta@sundstrom.io>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),

@@ -2,10 +2,10 @@
 
 /**
  * The Initial Developer of the Original Code is
- * Tarmo Alexander Sundström <ta@sundstrom.im>.
+ * Tarmo Alexander Sundström <ta@sundstrom.io>.
  *
  * Portions created by the Initial Developer are
- * Copyright (C) 2014 Tarmo Alexander Sundström <ta@sundstrom.im>
+ * Copyright (C) 2014 Tarmo Alexander Sundström <ta@sundstrom.io>
  *
  * All Rights Reserved.
  *
