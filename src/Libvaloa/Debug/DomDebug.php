@@ -34,9 +34,8 @@
  * Based on excellent dom debugging techniques discussed here:
  * http://stackoverflow.com/questions/684227/debug-a-domdocument-object-in-php.
  */
-namespace Libvaloa\Xml;
+namespace Libvaloa\Debug;
 
-use Libvaloa\Debug;
 use RecursiveIterator;
 use RecursiveTreeIterator;
 use DOMNode;

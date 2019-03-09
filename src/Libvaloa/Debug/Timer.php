@@ -30,14 +30,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-namespace Libvaloa;
+namespace Libvaloa\Debug;
 
 /**
  * Debug timer class.
  *
  * Used by Libvaloa\Debug for printing out execution time in debug messages.
  */
-class Debugtimer
+class Timer
 {
     /**
      * @var
