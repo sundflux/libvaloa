@@ -114,14 +114,18 @@ class Debug
 
         print '<pre class="libvaloa--debug">';
         foreach (self::$data as $v) {
-            echo sprintf('<code><strong>%s</strong> <br/> Memory usage %s bytes<br/> %s&#160;[%s]&#160;%s</code><br/>',
+            echo sprintf(
+                '<code><strong>%s</strong> <br/> Memory usage %s bytes<br/> %s&#160;[%s]&#160;%s</code><br/>',
                 $v->backtrace,
                 $v->mu,
                 $v->time,
                 $v->type,
                 (in_array(
                     $v->type,
-                    array('array', 'object'), true) ? '<code>'.$v->data.'</code>' : $v->data));
+                    array('array', 'object'),
+                    true
+                ) ? '<code>'.$v->data.'</code>' : $v->data)
+            );
         }
         print '</pre>';
 
@@ -143,8 +147,11 @@ class Debug
             && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             return;
 
-            if (isset($_SERVER['HTTP_ACCEPT']) && in_array('application/json',
-                explode(',', $_SERVER['HTTP_ACCEPT']), true)) {
+            if (isset($_SERVER['HTTP_ACCEPT']) && in_array(
+                'application/json',
+                explode(',', $_SERVER['HTTP_ACCEPT']),
+                true
+            )) {
                 return;
             }
         }

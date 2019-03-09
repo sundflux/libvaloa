@@ -102,7 +102,7 @@ class Conversion
         } elseif (is_object($source) || is_array($source)) {
             $this->sourceType = self::SOURCE_TYPE_OBJECT;
 
-            // only the first element of array/object is used
+        // only the first element of array/object is used
             // because xml can have only one root element.
             // @todo remove other elements but first
         } elseif (is_file($source)) {
@@ -172,6 +172,7 @@ class Conversion
                 if (!isset($proc)) {
                     return $this->source->asXML();
                 }
+                // no break
             default:
                 $dom = $this->toDOM(false);
         }

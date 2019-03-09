@@ -94,8 +94,10 @@ class Timer
      */
     public static function benchScript($decimals = 3) : float
     {
-        return (float) sprintf('%0.'.(int) $decimals.'f',
-            (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']));
+        return (float) sprintf(
+            '%0.'.(int) $decimals.'f',
+            (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'])
+        );
     }
 
     /**
@@ -107,10 +109,12 @@ class Timer
      * @param int $decimals number of decimals in benchmark time
      *
      * @return float Benchmark time
-     */(
+     */
     public function stop($decimals = 3) : float
     {
-        return (float) sprintf('%0.'.(int) $decimals.'f',
-            (microtime(true) - $this->startTime));
+        return (float) sprintf(
+            '%0.'.(int) $decimals.'f',
+            (microtime(true) - $this->startTime)
+        );
     }
 }
