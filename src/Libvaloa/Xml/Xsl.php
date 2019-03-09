@@ -132,7 +132,7 @@ class Xsl
      *
      * @uses   DomDocument
      */
-    public function parse($xmldom)
+    public function parse($xmldom) : string
     {
         if (!$this->templatePreProcessed) {
             $this->preProcessTemplate();

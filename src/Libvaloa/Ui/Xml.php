@@ -392,7 +392,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * @param string $message
      * @return bool
      */
-    public function addError($message)
+    public function addError($message) : bool
     {
         return $this->addMessage($message, 'alert alert-danger');
     }
@@ -401,7 +401,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * @param string $message
      * @return bool
      */
-    public function addNotice($message)
+    public function addNotice($message) : bool
     {
         return $this->addMessage($message, 'alert alert-warning');
     }
@@ -410,7 +410,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * @param string $message
      * @return bool
      */
-    public function addSuccess($message)
+    public function addSuccess($message) : bool
     {
         return $this->addMessage($message, 'alert alert-success');
     }
@@ -420,7 +420,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      * @param string $class
      * @return bool
      */
-    public function addMessage($message, $class = 'alert alert-info')
+    public function addMessage($message, $class = 'alert alert-info') : bool
     {
         if (session_status() == PHP_SESSION_NONE) {
             return false;
@@ -442,9 +442,8 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
             $_SESSION['messages'][] = $msgObj;
         }
 
-        Debug::__print($_SESSION['messages']);
+        return true;
     }
-
 
     /**
      *
@@ -508,7 +507,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      *
      * @return string XHTML output
      */
-    public function __toString()
+    public function __toString() : string
     {
         try {
             return (string) $this->parse();

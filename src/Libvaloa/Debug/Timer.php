@@ -64,7 +64,7 @@ class Timer
      *
      * @return float Current microtime
      */
-    public function startCounter()
+    public function startCounter() : float
     {
         $this->startTime = microtime(true);
         $this->startMem = memory_get_usage();
@@ -77,7 +77,7 @@ class Timer
      *
      * @return mixed
      */
-    public function memory()
+    public function memory() : int
     {
         return memory_get_usage() - $this->startMem;
     }
@@ -92,9 +92,9 @@ class Timer
      *
      * @return float Benchmark time
      */
-    public static function benchScript($decimals = 3)
+    public static function benchScript($decimals = 3) : float
     {
-        return sprintf('%0.'.(int) $decimals.'f',
+        return (float) sprintf('%0.'.(int) $decimals.'f',
             (microtime(true) - $_SERVER['REQUEST_TIME_FLOAT']));
     }
 
@@ -107,10 +107,10 @@ class Timer
      * @param int $decimals number of decimals in benchmark time
      *
      * @return float Benchmark time
-     */
-    public function stop($decimals = 3)
+     */(
+    public function stop($decimals = 3) : float
     {
-        return sprintf('%0.'.(int) $decimals.'f',
+        return (float) sprintf('%0.'.(int) $decimals.'f',
             (microtime(true) - $this->startTime));
     }
 }

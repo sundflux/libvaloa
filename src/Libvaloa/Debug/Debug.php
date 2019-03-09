@@ -112,7 +112,7 @@ class Debug
             return;
         }
 
-        print '<pre id="debug">';
+        print '<pre class="libvaloa--debug">';
         foreach (self::$data as $v) {
             echo sprintf('<code><strong>%s</strong> <br/> Memory usage %s bytes<br/> %s&#160;[%s]&#160;%s</code><br/>',
                 $v->backtrace,
@@ -150,6 +150,6 @@ class Debug
         }
 
         $a = func_get_args();
-        call_user_func_array(array("\Libvaloa\Debug", 'append'), $a);
+        call_user_func_array(array("\Libvaloa\Debug\Debug", 'append'), $a);
     }
 }
