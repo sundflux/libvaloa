@@ -5,7 +5,7 @@ libvaloa
 
 Libvaloa is a small utility library for generating HTML user interfaces using XML+XSL, mainly developed for Webvaloa. 
 
-In addition to reference XSL+XML implementation, the UI Interface can be hooked to alternative template engines and the library contains lightweight database wrapper and resultset object handler for PDO, together with Gettext + Ini translations support.
+In addition to reference XSL+XML implementation, the UI Interface can be hooked to alternative template engines.
 
 http://libvaloa.webvaloa.com/
 
@@ -18,30 +18,27 @@ or include libvaloa in your composer.json
 ```json
 {
     "require": {
-        "sundflux/libvaloa": "^1.0.0"
+        "sundflux/libvaloa": "^3.0.0"
     }
 }
 ```
 
 ## Requirements
 
-- PHP 5.6 or newer (PHP 7.0+ recommended).
-- XSL support enabled (Ubuntu 14.04 package: php5-xsl, Ubuntu 16.04 package: php7.0-xml).
-- DOM support enabled (enabled by default).
+- PHP 7.2 or newer.
+- XSL support enabled (php7.2-xsl)
 
 ## Features
 
 - XSL/XML/DOM/SimpleXML/PHP Object conversion library.
-- Fast and flexible PDO database abstraction.
 - Generic UI interface for hooking template engines.
 - Reference UI interface implementation using XSL+XML.
 - Debugging helpers, including DOM debugger.
-- Localization interface.
 - Standards-compatible: PRS-1, PRS-2, PRS-4, verified and fixed with php-cs-fixer.
 
 ## Copyright and license
 
-Copyright (C) 2004 - 2017 Tarmo Alexander Sundström & contributors.
+Copyright (C) 2019 Tarmo Alexander Sundström & contributors.
 
 Libvaloa is licensed under the MIT License - see the LICENSE file for details.
 
@@ -56,6 +53,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
+
+### [3.0.0] - 2019-03-xx
+- Bumped version requirement to PHP 7.2.
+- Db package is now separated to its own component, Libvaloa-db. Libvaloa will only concentrate on XSL UI and related utilities.
+- Remove I18n package completely. There are better translation libs out there, so it doesn't really bring any value to Libvaloa.
+- Move all debug classes under Debug package. Effectively: Debug -> Debug\Debug, Debugtimer -> Debug\Debugtimer, Xml\DomDebug -> Debug\DomDebug.
 
 ### [2.0.0] - 2018-06-04
 #### Added
