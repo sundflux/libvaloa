@@ -11,8 +11,6 @@
  *
  * Contributor(s):
  * 2010 Tarmo Alexander Sundström <ta@sundstrom.io>
- * 2014 Tarmo Alexander Sundström <ta@sundstrom.io>
- * 2017 Tarmo Alexander Sundström <ta@sundstrom.io>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -67,7 +65,7 @@
  */
 namespace Libvaloa\Xml;
 
-use Libvaloa\Debug;
+use Libvaloa\Debug\Debug;
 use stdClass;
 use DomDocument;
 use DomAttr;
