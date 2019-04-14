@@ -43,7 +43,7 @@ use stdClass;
  *
  * Include:
  * <code>
- * use Libvaloa\Debug;
+ * use Libvaloa\Debug\Debug;
  * </code>
  *
  * in your class/application and simply call:
