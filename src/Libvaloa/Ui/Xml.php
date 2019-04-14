@@ -5,7 +5,7 @@
  * Tarmo Alexander Sundström <ta@sundstrom.io>.
  *
  * Portions created by the Initial Developer are
- * Copyright (C) 2004,2013,2014 Tarmo Alexander Sundström <ta@sundstrom.io>
+ * Copyright (C) 2004,2013,2014,2019 Tarmo Alexander Sundström <ta@sundstrom.io>
  *
  * All Rights Reserved.
  *
@@ -40,14 +40,15 @@ namespace Libvaloa\Ui;
 
 use Libvaloa\Xml\Conversion;
 use stdClass;
-use Libvaloa\Debug;
+use DomDocument;
+use Libvaloa\Debug\Debug;
 use Libvaloa\Xml\Xsl as Xsl;
 
 /**
  * Class Xml
  * @package Libvaloa\Ui
  */
-class Xml extends \Libvaloa\Xml\Xml implements Ui
+class Xml implements Ui
 {
     /**
      * @var bool
@@ -90,6 +91,14 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     private $ignoreTemplates = array();
 
     /**
+     * Instance of DomDocument.
+     *
+     *
+     * @var DomDocument
+     */
+    protected $dom;    
+
+    /**
      * @var array
      */
     public $properties = array(
@@ -116,7 +125,18 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
      */
     public function __construct($root = 'page')
     {
-        parent::__construct($root);
+        $this->dom = new DomDocument('1.0', 'utf-8');
+        $this->dom->preserveWhiteSpace = false;
+        $this->dom->resolveExternals = false;
+
+        // Format output when in debug mode
+        if (error_reporting() === E_ALL) {
+            $this->dom->formatOutput = true;
+        } else {
+            $this->dom->formatOutput = false;
+        }
+
+        $this->dom->appendChild($this->dom->createElement($root));
 
         $this->xsl = new Xsl();
         $this->page = $this->dom->createElement('index');
@@ -170,7 +190,7 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
     {
         $this->issetpageroot = true;
 
-        if ($this->validateNodeName($root) && $root != $this->page->nodeName) {
+        if (Conversion::validateNodeName($root) && $root != $this->page->nodeName) {
             $nodelist = $this->page->childNodes;
             $this->page = $this->dom->createElement($root);
 
@@ -208,10 +228,10 @@ class Xml extends \Libvaloa\Xml\Xml implements Ui
             return;
         }
 
-        if ($key && $this->validateNodeName($key)) {
+        if ($key && Conversion::validateNodeName($key)) {
             $key = $this->dom->createElement($key);
-            $this->objectToNode($object, $key, $cdata);
-            $this->dom->firstChild->appendChild($key);
+            $conversion = new Conversion($object);
+            $conversion->objectToDomElement($object, $key, $this->dom);
         } else {
             $conversion = new Conversion($object);
             $conversion->objectToDomElement($object, $this->page, $this->dom);
