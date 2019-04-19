@@ -54,6 +54,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
 
+### [3.0.1] - 2019-04-19
+- More refactoring and fixes to Ui\Xml.
+
 ### [3.0.0] - 2019-04-13
 - Bumped version requirement to PHP 7.2.
 - Db package is now separated to its own component, Libvaloa-db. Libvaloa will only concentrate on XSL UI and related utilities.
