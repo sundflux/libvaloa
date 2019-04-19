@@ -76,7 +76,7 @@ class Debug
         }
 
         $debugobj = new stdClass();
-        $debugobj->time = Debugtimer::benchScript(5);
+        $debugobj->time = Timer::benchScript(5);
         $debugobj->mu = memory_get_usage();
         $debugobj->type = gettype($value);
 
@@ -96,7 +96,7 @@ class Debug
         $debugobj->backtrace = "{$backtrace[2]['file']} line {$backtrace[2]['line']} (Called from {$calledFrom}())";
 
         if (self::$shutdown === false) {
-            register_shutdown_function(array("Libvaloa\Debug", 'dump'));
+            register_shutdown_function(array("Libvaloa\Debug\Debug", 'dump'));
             self::$shutdown = true;
         }
 

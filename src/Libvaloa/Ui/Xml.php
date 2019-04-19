@@ -297,11 +297,11 @@ class Xml implements Ui
         $this->dom->firstChild->appendChild($module);
 
         if (error_reporting() === E_ALL) {
-            Debug::__print(htmlspecialchars(self::toString()));
+            Debug::__print(htmlspecialchars($this->toString()));
         }
 
         try {
-            $retval = $this->asxml ? self::toString() : $this->xsl->parse($this->dom);
+            $retval = $this->asxml ? $this->toString() : $this->xsl->parse($this->dom);
         } catch (Exception $e) {
             Debug::__print($e->getMessage());
             $retval = false;
@@ -521,6 +521,11 @@ class Xml implements Ui
         return $this->properties['headers'] = $headers;
     }
 
+    public function toString()
+    {
+        return (string) $this->dom->saveXML();
+    }
+
     /**
      * self to string conversion.
      *
@@ -532,7 +537,7 @@ class Xml implements Ui
         try {
             return (string) $this->parse();
         } catch (Exception $e) {
-            return '';
+            return $e->getMessage();
         }
     }
 }
