@@ -54,6 +54,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 Changes are grouped by added, fixed or changed feature.
 
+### [3.0.2] - 2019-08-25
+- Set minimum PHP requirement to 7.2.19
+
 ### [3.0.1] - 2019-04-19
 - More refactoring and fixes to Ui\Xml.
 
